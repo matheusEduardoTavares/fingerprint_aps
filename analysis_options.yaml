@@ -1,29 +1,76 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
 linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    # ERRORS
+    always_use_package_imports: true
+    avoid_dynamic_calls: true
+    avoid_empty_else: true
+    avoid_returning_null_for_future: true
+    avoid_slow_async_io: true
+    avoid_type_to_string: true
+    avoid_web_libraries_in_flutter: true
+    cancel_subscriptions: true
+    close_sinks: true
+    comment_references: false
+    empty_statements: true
+    no_duplicate_case_values: true
+    no_logic_in_create_state: true
+    unnecessary_statements: true
+    valid_regexps: true
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+    # STYLE
+    always_declare_return_types: true
+    always_put_control_body_on_new_line: true
+    always_put_required_named_parameters_first: true
+    always_require_non_null_named_parameters: true
+    annotate_overrides: true
+    avoid_annotating_with_dynamic: true
+    avoid_as: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_catches_without_on_clauses: false
+    avoid_classes_with_only_static_members: false
+    avoid_escaping_inner_quotes: true
+    avoid_renaming_method_parameters: true
+    avoid_returning_null_for_void: true
+    avoid_single_cascade_in_expression_statements: true
+    avoid_types_on_closure_parameters: false
+    avoid_unnecessary_containers: true
+    avoid_unused_constructor_parameters: true
+    avoid_void_async: true
+    cascade_invocations: true
+    prefer_relative_imports: false
+    constant_identifier_names: false
+    exhaustive_cases: true
+    flutter_style_todos: false
+    lines_longer_than_80_chars: false
+    prefer_typing_uninitialized_variables: true
+    use_function_type_syntax_for_parameters: true
+    join_return_with_assignment: true
+    leading_newlines_in_multiline_strings: true
+    no_default_cases: true
+    no_runtimeType_toString: true
+    parameter_assignments: true
+    prefer_asserts_with_message: true
+    prefer_asserts_in_initializer_lists: true
+    prefer_conditional_assignment: true
+    prefer_constructors_over_static_methods: true
+    prefer_final_in_for_each: true
+    prefer_if_elements_to_conditional_expressions: true
+    prefer_is_not_operator: true
+    prefer_null_aware_operators: true
+    prefer_single_quotes: true
+    prefer_spread_collections: true
+    recursive_getters: true
+    sized_box_for_whitespace: true
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    unnecessary_await_in_return: true
+    unnecessary_overrides: true
+    unnecessary_parenthesis: true
+    unnecessary_string_escapes: true
+    unnecessary_string_interpolations: true
+    use_is_even_rather_than_modulo: true
+    use_raw_strings: true
+    use_string_buffers: true
+    omit_local_variable_types: false
