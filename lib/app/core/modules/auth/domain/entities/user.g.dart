@@ -20,19 +20,22 @@ class UserAdapter extends TypeAdapter<User> {
       login: fields[1] as String,
       password: fields[0] as String,
       authStatusEnum: fields[2] as AuthStatusEnum,
+      permissionsUserEnum: fields[3] as PermissionsUserEnum,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.password)
       ..writeByte(1)
       ..write(obj.login)
       ..writeByte(2)
-      ..write(obj.authStatusEnum);
+      ..write(obj.authStatusEnum)
+      ..writeByte(3)
+      ..write(obj.permissionsUserEnum);
   }
 
   @override

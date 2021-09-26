@@ -1,8 +1,8 @@
+import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
 import 'package:fingerprint_aps/app/core/widgets/loading_widget/loading_widget.dart';
-import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_controller.dart';
-import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_state.dart';
-import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_status_enum.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -19,10 +19,10 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthController, AuthState>(
-      bloc: _authController..verifyIsLogged(),
+    return BlocListener<AuthController, UserState>(
+      bloc: _authController..getUser(),
       listener: (_, state) {
-        switch (state.authStatusEnum) {
+        switch (state.user.authStatusEnum) {
           case AuthStatusEnum.empty:
             break;
           case AuthStatusEnum.logged:

@@ -1,8 +1,8 @@
-import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
-import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_status_enum.dart';
 import 'package:hive/hive.dart';
 
-export 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_status_enum.dart';
+import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 
 part 'user.g.dart';
 
@@ -12,6 +12,7 @@ class User {
     required this.login,
     required this.password,
     required this.authStatusEnum,
+    required this.permissionsUserEnum,
   });
 
   @HiveField(0)
@@ -22,4 +23,12 @@ class User {
 
   @HiveField(2)
   final AuthStatusEnum authStatusEnum;
+
+  @HiveField(3)
+  final PermissionsUserEnum permissionsUserEnum;
+
+  @override
+  String toString() {
+    return 'User(password: $password, login: $login, authStatusEnum: $authStatusEnum, permissionsUserEnum: $permissionsUserEnum)';
+  }
 }
