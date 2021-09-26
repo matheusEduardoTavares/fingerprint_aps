@@ -21,8 +21,5 @@ class DefaultThemeData {
       secondaryVariant: DefinitionColors.secondaryLightColor,
       surface: Colors.white,
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: DefinitionColors.primaryDarkColor,
-    )
   );
 }
