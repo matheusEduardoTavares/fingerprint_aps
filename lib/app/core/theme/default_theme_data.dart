@@ -16,7 +16,16 @@ class DefaultThemeData {
     appBarTheme: const AppBarTheme(
       centerTitle: true,
     ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: DefinitionColors.primaryDarkColor,
+      foregroundColor: Colors.white
+    ),
     primaryColor: DefinitionColors.primaryDarkColor,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: DefinitionColors.primaryDarkColor,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.black54,
+    ),
     colorScheme: const ColorScheme(
       background: Colors.white,
       brightness: Brightness.light,

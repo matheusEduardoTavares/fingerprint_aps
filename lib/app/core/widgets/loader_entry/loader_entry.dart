@@ -13,9 +13,11 @@ class LoaderEntry {
     _entry ??= OverlayEntry(
       builder: (_) {
         return Container(
-          color: DefinitionColors.primaryLightColor.withOpacity(0.4),
+          color: Colors.black38,
           child: const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: DefinitionColors.primaryDarkColor,
+            ),
           ),
         );
       }

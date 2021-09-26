@@ -10,6 +10,7 @@ class UserInfoForm extends StatelessWidget {
     required this.loginController,
     required this.passwordController,
     required this.updateDropdownValue,
+    this.permissionsUserEnum,
     Key? key 
   }) : super(key: key);
 
@@ -17,6 +18,7 @@ class UserInfoForm extends StatelessWidget {
   final TextEditingController loginController;
   final TextEditingController passwordController;
   final UpdateDropdownValue updateDropdownValue;
+  final PermissionsUserEnum? permissionsUserEnum;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class UserInfoForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: DropdownButtonFormField<PermissionsUserEnum>(
+              value: permissionsUserEnum,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Permissões',

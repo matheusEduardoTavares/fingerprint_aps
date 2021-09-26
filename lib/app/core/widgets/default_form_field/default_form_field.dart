@@ -18,6 +18,7 @@ class DefaultFormField extends StatelessWidget {
         border: const OutlineInputBorder(),
         labelText: labelText,
       ),
+      textInputAction: TextInputAction.next,
       validator: (value) => value != null && value.length > 5 ? 
         null : 'Ao menos 5 caracteres',
     );

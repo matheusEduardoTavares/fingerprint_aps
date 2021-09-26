@@ -4,6 +4,8 @@ import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 
+export 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
+
 part 'user.g.dart';
 
 @HiveType(typeId : HiveHelper.userAdapterID)
