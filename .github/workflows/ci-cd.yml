@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.4
         with:
           name: apk
-          path: build/app/outputs/bundle/release/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
   build_appbundle:
     name: Build Flutter (Android - appbundle)
