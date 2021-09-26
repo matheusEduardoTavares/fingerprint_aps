@@ -32,4 +32,8 @@ class AuthController extends Cubit<UserState> {
 
     return user;
   }
+
+  void updateUserState(User newUser) {
+    emit(state.copyWith(user: newUser));
+  }
 }

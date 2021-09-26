@@ -75,12 +75,7 @@ void main() {
 
       ///Aqui na hora de buscar o usuário, se foi deletado, claramente não deve retornar nada
       final user = await _authController!.getUser();
-
-      final isEqualAttributes = userToCreate.authStatusEnum == user?.authStatusEnum && 
-        userToCreate.login == user?.login && userToCreate.password == user?.password &&
-          userToCreate.permissionsUserEnum == user?.permissionsUserEnum;
-
-      expect(isEqualAttributes, true);
+      expect(userToCreate.isEqual(user), true);
     });
   });
 }

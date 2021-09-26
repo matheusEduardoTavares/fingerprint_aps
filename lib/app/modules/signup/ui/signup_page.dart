@@ -1,6 +1,6 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
-import 'package:fingerprint_aps/app/modules/signup/presenter/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:flutter/material.dart';
 

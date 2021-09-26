@@ -1,19 +1,26 @@
 import 'package:fingerprint_aps/app/core/helpers/images_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
+import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/modules/home/presenter/controller/home_controller.dart';
 import 'package:fingerprint_aps/app/modules/home/ui/widgets/home_content/home_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({ 
     required AuthController authController,
+    required HomeController homeController,
     Key? key,
   }) : 
   _authController = authController,
+  _homeController = homeController,
   super(key: key);
 
   final AuthController _authController;
+  final HomeController _homeController;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -40,88 +47,107 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(
-          child: Text(_user.login),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.logout),
+    return BlocBuilder<AuthController, UserState>(
+      bloc: widget._authController,
+      builder: (context, userState) {
+        return Scaffold(
+          appBar: AppBar(
+            title: FittedBox(
+              child: Text(userState.user.login),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.logout),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          Image.asset(
-            ImagesHelper.nature,
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.cover,
-          ),
-          Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  color: Colors.white70,
+          body: Stack(
+            children: [
+              Image.asset(
+                ImagesHelper.nature,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.cover,
+              ),
+              Center(
+                child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ValueListenableBuilder(
-                      valueListenable: _selectedBarIndex,
-                      builder: (_, __, ___) => [
-                        HomeContent(
-                          permissionsUserEnum: _user.permissionsUserEnum,
-                        ),
-                        Column(
-                          children: [
-                            UserInfoForm(
-                              formKey: _formKey,
-                              loginController: _loginController,
-                              passwordController: _passwordController,
-                              updateDropdownValue: (newValue) {
-                                setState(() {
-                                  _permissionsUserEnum = newValue;
-                                });
-                              },
-                              permissionsUserEnum: _permissionsUserEnum,
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      color: Colors.white70,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ValueListenableBuilder(
+                          valueListenable: _selectedBarIndex,
+                          builder: (_, __, ___) => [
+                            HomeContent(
+                              permissionsUserEnum: userState.user.permissionsUserEnum,
                             ),
-                            ElevatedButton(
-                              onPressed: () {}, 
-                              child: const Text('Atualizar dados')
+                            Column(
+                              children: [
+                                UserInfoForm(
+                                  formKey: _formKey,
+                                  loginController: _loginController,
+                                  passwordController: _passwordController,
+                                  updateDropdownValue: (newValue) {
+                                    setState(() {
+                                      _permissionsUserEnum = newValue;
+                                    });
+                                  },
+                                  permissionsUserEnum: _permissionsUserEnum,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    final userViewModel = UserViewModel(
+                                      login: _loginController.text, 
+                                      password: _passwordController.text, 
+                                      permissionsUserEnum: _permissionsUserEnum,
+                                    );
+    
+                                    widget._homeController.updateUser(userViewModel);
+                                  }, 
+                                  child: const Text('Atualizar dados')
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+
+                                  }, 
+                                  child: const Text('Deletar conta')
+                                ),
+                              ],
                             ),
-                          ],
+                          ][_selectedBarIndex.value],
                         ),
-                      ][_selectedBarIndex.value],
+                      ),
                     ),
                   ),
                 ),
               ),
+            ],
+          ),
+          bottomNavigationBar: ValueListenableBuilder(
+            valueListenable: _selectedBarIndex,
+            builder: (_, __, ___) => BottomNavigationBar(
+              currentIndex: _selectedBarIndex.value,
+              onTap: (newIndex) => _selectedBarIndex.value = newIndex,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.nature_outlined),
+                  label: 'Informações',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person_outline),
+                  label: 'Dados',
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: _selectedBarIndex,
-        builder: (_, __, ___) => BottomNavigationBar(
-          currentIndex: _selectedBarIndex.value,
-          onTap: (newIndex) => _selectedBarIndex.value = newIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.nature_outlined),
-              label: 'Informações',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: 'Dados',
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.fingerprint),
-        onPressed: () {},
-      ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.fingerprint),
+            onPressed: () {},
+          ),
+        );
+      }
     );
   }
 }

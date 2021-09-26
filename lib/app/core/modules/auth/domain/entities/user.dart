@@ -5,6 +5,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_statu
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 
 export 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
+export 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user_extension.dart';
 
 part 'user.g.dart';
 
