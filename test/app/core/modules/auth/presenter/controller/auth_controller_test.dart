@@ -1,3 +1,4 @@
+import 'package:fingerprint_aps/app/core/helpers/environments.dart';
 import 'package:fingerprint_aps/app/core/helpers/local_storage_helper.dart';
 import 'package:fingerprint_aps/app/core/local_storage/hive_local_storage.dart';
 import 'package:fingerprint_aps/app/core/local_storage/local_storage.dart';
@@ -17,6 +18,8 @@ void main() {
   LoadingDependenciesController? _loadDependenciesController;
   LocalStorage? _localStorage;
   var _isLoadedDependencies = false;
+
+  setUpAll(() => Environments.isTest = true);
 
   setUp(
     () async {
