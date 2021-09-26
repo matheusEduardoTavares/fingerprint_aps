@@ -5,6 +5,7 @@ import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_state
 import 'package:fingerprint_aps/app/modules/auth/presenter/controller/auth_status_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({ 
@@ -25,10 +26,10 @@ class AuthPage extends StatelessWidget {
           case AuthStatusEnum.empty:
             break;
           case AuthStatusEnum.logged:
-            Navigator.of(context).popAndPushNamed(RoutesDefinition.home);
+            Modular.to.popAndPushNamed('/auth${RoutesDefinition.home}');
             break;
           case AuthStatusEnum.unlogged:
-            Navigator.of(context).popAndPushNamed(RoutesDefinition.login);
+            Modular.to.popAndPushNamed('/auth${RoutesDefinition.login}');
             break;
         }
       },

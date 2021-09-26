@@ -17,4 +17,7 @@ class DefinitionColors {
 
   /// Vermelho
   static const Color errorColor = Colors.red;
+
+  ///Azul forte da splash
+  static const Color splashColor = Color.fromRGBO(3, 77, 122, 1);
 }

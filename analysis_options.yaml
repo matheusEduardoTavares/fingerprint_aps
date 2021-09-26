@@ -74,3 +74,7 @@ linter:
     use_raw_strings: true
     use_string_buffers: true
     omit_local_variable_types: false
+
+analyzer:
+  exclude:
+    - lib/**.g.dart
