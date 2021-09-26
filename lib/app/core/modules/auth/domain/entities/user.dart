@@ -18,6 +18,13 @@ class User {
     required this.permissionsUserEnum,
   });
 
+  factory User.initial() => User(
+    authStatusEnum: AuthStatusEnum.empty,
+    login: '',
+    password: '',
+    permissionsUserEnum: PermissionsUserEnum.one,
+  );
+
   @HiveField(0)
   final String password;
 

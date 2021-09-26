@@ -24,7 +24,12 @@ class AuthController extends Cubit<UserState> {
 
     final user = await _getUserUsecaseUsecase.execute();
 
-    emit(state.copyWith(user: user));
+    if (user != null) {
+      emit(state.copyWith(user: user));
+    }
+    else {
+      emit(state.copyWith(user: User.initial()));
+    }
 
     if (!Environments.isTest) {
       LoaderEntry.hide();

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fingerprint_aps/app/core/helpers/images_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
@@ -47,14 +48,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthController, UserState>(
+    return BlocBuilder<AuthController, UserState?>(
       bloc: widget._authController,
       builder: (context, userState) {
+        if (userState == null) {
+          return const SizedBox(height: 0, width: 0,);
+        }
+      
         return Scaffold(
           appBar: AppBar(
-            title: FittedBox(
-              child: Text(userState.user.login),
-            ),
+            title: AutoSizeText(userState.user.login),
             actions: [
               IconButton(
                 onPressed: () => widget._homeController.logout(),
@@ -109,9 +112,7 @@ class _HomePageState extends State<HomePage> {
                                   child: const Text('Atualizar dados')
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {
-
-                                  }, 
+                                  onPressed: () => widget._homeController.deleteAccount(), 
                                   child: const Text('Deletar conta')
                                 ),
                               ],

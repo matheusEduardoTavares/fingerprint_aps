@@ -7,6 +7,7 @@ import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart'
 import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_update_user_usecase.dart';
 import 'package:asuka/asuka.dart' as asuka;
+import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_user_delete_account_usecase.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_user_logout_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,14 +17,17 @@ class HomeController {
     required AuthController authController,
     required HomeUpdateUserUsecase homeUpdateUserUsecase,
     required HomeUserLogoutUsecase homeUserLogoutUsecase,
+    required HomeUserDeleteAccountUsecase homeUserDeleteAccountUsecase,
   }) : 
   _authController = authController,
   _homeUserLogoutUsecase = homeUserLogoutUsecase,
+  _homeUserDeleteAccountUsecase = homeUserDeleteAccountUsecase,
   _homeUpdateUserUsecase = homeUpdateUserUsecase;
 
   final AuthController _authController;
   final HomeUpdateUserUsecase _homeUpdateUserUsecase;
   final HomeUserLogoutUsecase _homeUserLogoutUsecase;
+  final HomeUserDeleteAccountUsecase _homeUserDeleteAccountUsecase;
 
   Future<void> updateUser(UserViewModel userData) async {
     if (_authController.state.user.isEqualViewModel(userData)) {
@@ -66,6 +70,25 @@ class HomeController {
     }
 
     await _homeUserLogoutUsecase.logout();
+
+    if (!Environments.isTest) {
+      Modular.to.popAndPushNamed(RoutesDefinition.auth);
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    final confirmDelete = await asuka.showDialog<bool>(
+      builder: (_) => const ConfirmDialog(
+        title: 'Deseja mesmo deletar a conta ?',
+        content: 'A operação NÃO poderá ser desfeita !!',
+      ),
+    );
+
+    if (confirmDelete == null || !confirmDelete) {
+      return;
+    }
+
+    await _homeUserDeleteAccountUsecase.deleteAccount();
 
     if (!Environments.isTest) {
       Modular.to.popAndPushNamed(RoutesDefinition.auth);
