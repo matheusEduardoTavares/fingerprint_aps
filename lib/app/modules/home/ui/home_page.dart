@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () => widget._homeController.logout(),
                 icon: const Icon(Icons.logout),
               ),
             ],

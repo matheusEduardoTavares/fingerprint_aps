@@ -1,22 +1,29 @@
 import 'package:fingerprint_aps/app/core/helpers/environments.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
+import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
+import 'package:fingerprint_aps/app/core/widgets/dialogs/confirm_dialog.dart';
 import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart';
 import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_update_user_usecase.dart';
 import 'package:asuka/asuka.dart' as asuka;
+import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_user_logout_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeController {
   HomeController({
     required AuthController authController,
     required HomeUpdateUserUsecase homeUpdateUserUsecase,
+    required HomeUserLogoutUsecase homeUserLogoutUsecase,
   }) : 
   _authController = authController,
+  _homeUserLogoutUsecase = homeUserLogoutUsecase,
   _homeUpdateUserUsecase = homeUpdateUserUsecase;
 
   final AuthController _authController;
   final HomeUpdateUserUsecase _homeUpdateUserUsecase;
+  final HomeUserLogoutUsecase _homeUserLogoutUsecase;
 
   Future<void> updateUser(UserViewModel userData) async {
     if (_authController.state.user.isEqualViewModel(userData)) {
@@ -44,6 +51,24 @@ class HomeController {
 
     if (!Environments.isTest) {
       LoaderEntry.hide();
+    }
+  }
+
+  Future<void> logout() async {
+    final confirmLogout = await asuka.showDialog<bool>(
+      builder: (_) => const ConfirmDialog(
+        title: 'Deseja mesmo fazer o logout ?',
+      ),
+    );
+
+    if (confirmLogout == null || !confirmLogout) {
+      return;
+    }
+
+    await _homeUserLogoutUsecase.logout();
+
+    if (!Environments.isTest) {
+      Modular.to.popAndPushNamed(RoutesDefinition.auth);
     }
   }
 }

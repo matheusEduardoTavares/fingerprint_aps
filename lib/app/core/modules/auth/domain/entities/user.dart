@@ -34,4 +34,18 @@ class User {
   String toString() {
     return 'User(password: $password, login: $login, authStatusEnum: $authStatusEnum, permissionsUserEnum: $permissionsUserEnum)';
   }
+
+  User copyWith({
+    String? password,
+    String? login,
+    AuthStatusEnum? authStatusEnum,
+    PermissionsUserEnum? permissionsUserEnum,
+  }) {
+    return User(
+      password: password ?? this.password,
+      login: login ?? this.login,
+      authStatusEnum: authStatusEnum ?? this.authStatusEnum,
+      permissionsUserEnum: permissionsUserEnum ?? this.permissionsUserEnum,
+    );
+  }
 }
