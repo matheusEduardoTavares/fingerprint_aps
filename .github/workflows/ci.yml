@@ -14,7 +14,7 @@ on:
 
 jobs:
   flutter_test:
-    name: Run Flutter analyze and tests
+    name: Run Flutter tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,6 @@ jobs:
         with:
           flutter-version: '2.2.3'
       - run: flutter pub get
-      - run: flutter analyze
       - run: flutter test --coverage
       - run: flutter test --machine > test-results.json
       - uses: dorny/test-reporter@v1.4.2
@@ -35,4 +34,4 @@ jobs:
           reporter: flutter-json
       - uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
-          min_coverage: 100
+          min_coverage: 60
