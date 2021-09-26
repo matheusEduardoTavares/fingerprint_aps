@@ -1,6 +1,5 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
-import 'package:fingerprint_aps/app/core/widgets/loading_widget/loading_widget.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +23,12 @@ class AuthPage extends StatelessWidget {
       listener: (_, state) {
         switch (state.user.authStatusEnum) {
           case AuthStatusEnum.empty:
+            if (state.user.login.isNotEmpty) {
+              Modular.to.popAndPushNamed('/auth${RoutesDefinition.login}');
+            }
+            else {
+              Modular.to.popAndPushNamed('/auth${RoutesDefinition.signup}');
+            }
             break;
           case AuthStatusEnum.logged:
             Modular.to.popAndPushNamed('/auth${RoutesDefinition.home}');
@@ -37,7 +42,6 @@ class AuthPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Carregando ...'),
         ),
-        body: const LoadingWidget(),
       ),
     );
   }

@@ -3,20 +3,25 @@ import 'package:fingerprint_aps/app/core/helpers/local_storage_helper.dart';
 import 'package:fingerprint_aps/app/core/local_storage/hive_local_storage.dart';
 import 'package:fingerprint_aps/app/core/local_storage/local_storage.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/data/drivers/get_user_driver_impl.dart';
-import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
-import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/usecases/get_user_usecase_impl.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/infra/repositories/get_user_repository_impl.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/domain/usecases/loading_dependencies_usecase_impl.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/presenter/controller/loading_dependencies_controller.dart';
+import 'package:fingerprint_aps/app/modules/signup/data/drivers/signup_driver_impl.dart';
+import 'package:fingerprint_aps/app/modules/signup/domain/usecases/signup_usecase_impl.dart';
+import 'package:fingerprint_aps/app/modules/signup/infra/repositories/signup_repository_impl.dart';
+import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
+import 'package:fingerprint_aps/app/modules/signup/presenter/view_models/user_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:faker/faker.dart';
 
 void main() {
-  AuthController? _authController;
+  SignupController? _signupController;
   LoadingDependenciesController? _loadDependenciesController;
   LocalStorage? _localStorage;
+  AuthController? _authController;
   var _isLoadedDependencies = false;
 
   setUpAll(() => Environments.isTest = true);
@@ -25,6 +30,16 @@ void main() {
     () async {
       _localStorage = HiveLocalStorage(
         boxKey: LocalStorageHelper.userKey,
+      );
+
+      _signupController = SignupController(
+        signupUsecase: SignupUsecaseImpl(
+          signupRepository: SignupRepositoryImpl(
+            signupDriver: SignupDriverImpl(
+              localStorage: _localStorage!,
+            ),
+          ),
+        ),
       );
 
       _authController = AuthController(
@@ -48,37 +63,25 @@ void main() {
     }
   );
 
-  group('Testing AuthModule', () {
-    test('Verify not found user', () async {
+  group('Testing SignupModule', () {
+    test('Verify if create user correctly', () async {
       ///Aqui é garantido excluir o usuário caso em algum outro teste tenha sido salvo no Hive
       await _localStorage!.clear();
 
       ///Aqui na hora de buscar o usuário, se foi deletado, claramente não deve retornar nada
+      final userViewModel = UserViewModel(
+        login: faker.person.name(), 
+        password: faker.lorem.sentence(), 
+        permissionsUserEnum: PermissionsUserEnum.values[faker.randomGenerator.integer(PermissionsUserEnum.values.length)],
+      );
+      
+      await _signupController!.createUser(userViewModel: userViewModel);
+
       final user = await _authController!.getUser();
 
-      expect(user, null);
-    });
-
-    test('Verify found user', () async {
-      final userToCreate = User(
-        authStatusEnum: AuthStatusEnum.logged,
-        login: '1223',
-        password: '54965965',
-        permissionsUserEnum: PermissionsUserEnum.one,
-      );
-
-      ///Aqui é garantido adicionar um usuário
-      await _localStorage!.write<User>(
-        LocalStorageHelper.userKey, 
-        userToCreate,
-      );
-
-      ///Aqui na hora de buscar o usuário, se foi deletado, claramente não deve retornar nada
-      final user = await _authController!.getUser();
-
-      final isEqualAttributes = userToCreate.authStatusEnum == user?.authStatusEnum && 
-        userToCreate.login == user?.login && userToCreate.password == user?.password &&
-          userToCreate.permissionsUserEnum == user?.permissionsUserEnum;
+      final isEqualAttributes = userViewModel.login == user?.login && 
+        userViewModel.password == user?.password &&
+          userViewModel.permissionsUserEnum == user?.permissionsUserEnum;
 
       expect(isEqualAttributes, true);
     });

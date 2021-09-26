@@ -12,3 +12,17 @@ enum PermissionsUserEnum {
   @HiveField(2)
   three
 }
+
+extension PermissionsUserEnumExt on PermissionsUserEnum {
+  static final displayValues = displayValuesMap.values.toList();
+  static final displayKeys = displayValuesMap.keys.toList();
+  static final displayEntries = displayValuesMap.entries.toList();
+
+  static const displayValuesMap = {
+    PermissionsUserEnum.one: 'Permissão um',
+    PermissionsUserEnum.two: 'Permissão dois',
+    PermissionsUserEnum.three: 'Permissão três',
+  };
+
+  String get displayValue => displayValuesMap[this]!;
+}

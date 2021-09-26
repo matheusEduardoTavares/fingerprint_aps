@@ -1,0 +1,34 @@
+import 'package:fingerprint_aps/app/core/theme/definition_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:asuka/asuka.dart' as asuka;
+
+class LoaderEntry {
+  LoaderEntry();
+
+  static OverlayEntry? _entry;
+  static var _isOpen = false;  
+
+  static void show() {
+    _entry ??= OverlayEntry(
+      builder: (_) {
+        return Container(
+          color: DefinitionColors.primaryLightColor.withOpacity(0.4),
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      }
+    );
+
+    if (!_isOpen) {
+      _isOpen = true;
+      asuka.addOverlay(_entry!);
+    }
+  }
+
+  static void hide() {
+    _isOpen = false;
+    _entry?.remove();
+  }
+}
