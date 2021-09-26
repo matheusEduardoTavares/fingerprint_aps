@@ -143,12 +143,16 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.fingerprint),
-            onPressed: () {},
-          ),
         );
       }
     );
+  }
+
+  @override 
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
   }
 }

@@ -9,7 +9,7 @@ class UserInfoForm extends StatelessWidget {
     required this.formKey,
     required this.loginController,
     required this.passwordController,
-    required this.updateDropdownValue,
+    this.updateDropdownValue,
     this.permissionsUserEnum,
     Key? key 
   }) : super(key: key);
@@ -17,7 +17,7 @@ class UserInfoForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController loginController;
   final TextEditingController passwordController;
-  final UpdateDropdownValue updateDropdownValue;
+  final UpdateDropdownValue? updateDropdownValue;
   final PermissionsUserEnum? permissionsUserEnum;
 
   @override
@@ -41,24 +41,25 @@ class UserInfoForm extends StatelessWidget {
               textEditingController: passwordController,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: DropdownButtonFormField<PermissionsUserEnum>(
-              value: permissionsUserEnum,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Permissões',
+          if (updateDropdownValue != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: DropdownButtonFormField<PermissionsUserEnum>(
+                value: permissionsUserEnum,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Permissões',
+                ),
+                validator: (value) => value != null ? null : 'Escolha uma opção',
+                onChanged: (value) => updateDropdownValue?.call(value!),
+                items: PermissionsUserEnumExt.displayEntries.map(
+                  (e) => DropdownMenuItem(
+                    child: Text(e.value),
+                    value: e.key,
+                  )
+                ).toList(),
               ),
-              validator: (value) => value != null ? null : 'Escolha uma opção',
-              onChanged: (value) => updateDropdownValue(value!),
-              items: PermissionsUserEnumExt.displayEntries.map(
-                (e) => DropdownMenuItem(
-                  child: Text(e.value),
-                  value: e.key,
-                )
-              ).toList(),
             ),
-          ),
         ],
       ),
     );

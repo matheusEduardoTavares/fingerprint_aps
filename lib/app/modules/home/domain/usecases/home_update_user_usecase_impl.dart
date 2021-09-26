@@ -19,7 +19,7 @@ class HomeUpdateUserUsecaseImpl implements HomeUpdateUserUsecase {
       login: userData.login, 
       password: userData.password, 
       authStatusEnum: AuthStatusEnum.logged, 
-      permissionsUserEnum: userData.permissionsUserEnum,
+      permissionsUserEnum: userData.permissionsUserEnum!,
     );
     
     return _homeUpdateUserRepository.updateUser(user);

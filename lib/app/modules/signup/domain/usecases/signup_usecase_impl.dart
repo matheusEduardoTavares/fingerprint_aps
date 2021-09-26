@@ -19,7 +19,7 @@ class SignupUsecaseImpl implements SignupUsecase {
       authStatusEnum: AuthStatusEnum.logged,
       login: userData.login,
       password: userData.password,
-      permissionsUserEnum: userData.permissionsUserEnum,
+      permissionsUserEnum: userData.permissionsUserEnum!,
     );
 
     await _signupRepository.createUser(user);

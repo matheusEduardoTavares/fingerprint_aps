@@ -16,4 +16,10 @@ extension UserExt on User {
 
     return isEqualAttributes;
   }
+
+  bool compaireToLogin(UserViewModel? other) {
+    final isEqualAttributes = login == other?.login && password == other?.password;
+
+    return isEqualAttributes;
+  }
 }
