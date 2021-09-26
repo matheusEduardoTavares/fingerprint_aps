@@ -5,6 +5,17 @@ class DefaultThemeData {
   DefaultThemeData._();
 
   static ThemeData defaultThemeData = ThemeData(
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      elevation: 2.0,
+      backgroundColor: DefinitionColors.primaryDarkColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+    ),
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+    ),
     primaryColor: DefinitionColors.primaryDarkColor,
     colorScheme: const ColorScheme(
       background: Colors.white,
@@ -21,8 +32,5 @@ class DefaultThemeData {
       secondaryVariant: DefinitionColors.secondaryLightColor,
       surface: Colors.white,
     ),
-    progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: DefinitionColors.primaryDarkColor,
-    )
   );
 }

@@ -10,6 +10,7 @@ import 'package:fingerprint_aps/app/modules/auth/ui/auth_page.dart';
 import 'package:fingerprint_aps/app/modules/core/core_module.dart';
 import 'package:fingerprint_aps/app/modules/home/home_module.dart';
 import 'package:fingerprint_aps/app/modules/login/login_module.dart';
+import 'package:fingerprint_aps/app/modules/signup/signup_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AuthModule extends Module {
@@ -31,5 +32,6 @@ class AuthModule extends Module {
     ChildRoute(Modular.initialRoute, child: (_, args) => AuthPage(authController: Modular.get(),)),
     ModuleRoute(RoutesDefinition.home, module: HomeModule()),
     ModuleRoute(RoutesDefinition.login, module: LoginModule()),
+    ModuleRoute(RoutesDefinition.signup, module: SignupModule()),
   ];
 }

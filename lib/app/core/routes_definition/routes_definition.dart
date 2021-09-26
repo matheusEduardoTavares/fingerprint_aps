@@ -5,4 +5,5 @@ class RoutesDefinition {
   static const home = '/home';
   static const login = '/login';
   static const auth = '/auth';
+  static const signup = '/signup';
 }
