@@ -20,7 +20,7 @@ class DefaultFormField extends StatelessWidget {
       ),
       textInputAction: TextInputAction.next,
       validator: (value) => value != null && value.length > 5 ? 
-        null : 'Ao menos 5 caracteres',
+        null : 'Ao menos 6 caracteres',
     );
   }
 }

@@ -36,7 +36,6 @@ class HomeController {
         const SnackBar(
           content: Text('Nenhum dado foi alterado'),
           behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: 70.0),
         )
       );
 
@@ -55,6 +54,14 @@ class HomeController {
 
     if (!Environments.isTest) {
       LoaderEntry.hide();
+
+      asuka.removeCurrentSnackBar();
+      asuka.showSnackBar(
+        const SnackBar(
+          content: Text('Dados atualizados com sucesso !!'),
+          behavior: SnackBarBehavior.floating,
+        )
+      );
     }
   }
 

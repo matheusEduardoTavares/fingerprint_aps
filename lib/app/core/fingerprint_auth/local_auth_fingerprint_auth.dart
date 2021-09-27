@@ -46,7 +46,6 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
           const SnackBar(
             content: Text('Muitas tentativas !! Aguarde ...'),
             behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.only(bottom: 70.0),
           )
         );
       }
