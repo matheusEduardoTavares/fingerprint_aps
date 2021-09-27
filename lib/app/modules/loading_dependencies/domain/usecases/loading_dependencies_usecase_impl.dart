@@ -1,5 +1,6 @@
 import 'package:fingerprint_aps/app/core/fingerprint_auth/fingerprint_auth.dart';
 import 'package:fingerprint_aps/app/core/helpers/environments.dart';
+import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
@@ -21,11 +22,15 @@ class LoadingDependenciesUsecaseImpl implements LoadingDependenciesUsecase {
       await _fingerprintAuth.canUseBiometrics();
     }
 
-    await Hive.initFlutter();
-    Hive
-      ..registerAdapter(UserAdapter())
-      ..registerAdapter(AuthStatusEnumAdapter())
-      ..registerAdapter(PermissionsUserEnumAdapter())
-    ;
+    if (!HiveHelper.initializedHive) {
+      await Hive.initFlutter();
+      Hive
+        ..registerAdapter(UserAdapter())
+        ..registerAdapter(AuthStatusEnumAdapter())
+        ..registerAdapter(PermissionsUserEnumAdapter())
+      ;
+
+      HiveHelper.initializedHive = true;
+    }
   }
 }
