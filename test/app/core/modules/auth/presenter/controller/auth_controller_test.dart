@@ -1,3 +1,4 @@
+import 'package:fingerprint_aps/app/core/fingerprint_auth/local_auth_fingerprint_auth.dart';
 import 'package:fingerprint_aps/app/core/helpers/environments.dart';
 import 'package:fingerprint_aps/app/core/helpers/local_storage_helper.dart';
 import 'package:fingerprint_aps/app/core/local_storage/hive_local_storage.dart';
@@ -38,7 +39,9 @@ void main() {
       );
 
       _loadDependenciesController = LoadingDependenciesController(
-        loadingDependenciesUsecase: LoadingDependenciesUsecaseImpl(),
+        loadingDependenciesUsecase: LoadingDependenciesUsecaseImpl(
+          fingerprintAuth: LocalAuthFingerprintAuth(),
+        ),
       );
 
       if (!_isLoadedDependencies) {
@@ -75,12 +78,7 @@ void main() {
 
       ///Aqui na hora de buscar o usuário, se foi deletado, claramente não deve retornar nada
       final user = await _authController!.getUser();
-
-      final isEqualAttributes = userToCreate.authStatusEnum == user?.authStatusEnum && 
-        userToCreate.login == user?.login && userToCreate.password == user?.password &&
-          userToCreate.permissionsUserEnum == user?.permissionsUserEnum;
-
-      expect(isEqualAttributes, true);
+      expect(userToCreate.isEqual(user), true);
     });
   });
 }

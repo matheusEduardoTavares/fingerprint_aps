@@ -17,6 +17,8 @@ class LoadingDependenciesController extends Cubit<LoadingDependenciesState>{
 
     await _loadingDependenciesUsecase.execute();
 
+    await Future.delayed(const Duration(seconds: 3));
+
     emit(state.copyWith(loadingDependenciesEnum: LoadingDependenciesEnum.finished));
   }
 }

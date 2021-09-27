@@ -23,7 +23,8 @@ jobs:
           java-version: "12.x"
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
+          channel: "stable"
+      - run: flutter precache -v
       - run: flutter pub get
       - run: flutter test --coverage
       - run: flutter test --machine > test-results.json
@@ -34,4 +35,4 @@ jobs:
           reporter: flutter-json
       - uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
         with:
-          min_coverage: 60
+          min_coverage: 40

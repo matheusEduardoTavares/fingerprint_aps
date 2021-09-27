@@ -14,14 +14,6 @@ class GetUserDriverImpl implements GetUserDriver{
 
   @override
   Future<User?> execute() async {
-    ///Criando um usuário só para testar
-    // await _localStorage.write<User>(LocalStorageHelper.userKey, User(
-    //   authStatusEnum: AuthStatusEnum.logged,
-    //   login: '1223',
-    //   password: '54965965',
-    //   permissionsUserEnum: PermissionsUserEnum.one,
-    // ));
-
     final hasUser = await _localStorage.contains(LocalStorageHelper.userKey);
 
     if (hasUser) {
