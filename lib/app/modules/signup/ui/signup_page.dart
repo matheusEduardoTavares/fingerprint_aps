@@ -1,7 +1,7 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
-import 'package:fingerprint_aps/app/modules/signup/presenter/view_models/user_view_model.dart';
-import 'package:fingerprint_aps/app/modules/signup/ui/widgets/user_info_form.dart';
+import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -21,8 +21,8 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController? _loginController;
-  TextEditingController? _passwordController;
+  late TextEditingController _loginController;
+  late TextEditingController _passwordController;
   PermissionsUserEnum? _permissionsUserEnum;
 
   @override 
@@ -42,8 +42,8 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> _validateAndSendForm() async {
     if (_formKey.currentState!.validate() && _permissionsUserEnum != null) {
       final userViewModel = UserViewModel(
-        login: _loginController!.text, 
-        password: _passwordController!.text, 
+        login: _loginController.text, 
+        password: _passwordController.text, 
         permissionsUserEnum: _permissionsUserEnum!,
       );
       widget._signupController.createUser(userViewModel: userViewModel);
@@ -73,8 +73,8 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 UserInfoForm(
                   formKey: _formKey,
-                  loginController: _loginController!,
-                  passwordController: _passwordController!,
+                  loginController: _loginController,
+                  passwordController: _passwordController,
                   updateDropdownValue: _updatePermissionsUserEnum,
                 ),
                 Padding(
@@ -90,5 +90,13 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+
+  @override 
+  void dispose() {
+    _loginController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
   }
 }

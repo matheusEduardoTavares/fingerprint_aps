@@ -3,19 +3,15 @@ import 'package:flutter/material.dart';
 class DefinitionColors {
   DefinitionColors._();
 
-  /// Roxo forte
-  static const Color primaryDarkColor = Color.fromRGBO(103, 100, 179, 1);
+  ///Verde escuro
+  static const Color primaryDarkColor = Color.fromRGBO(0, 73, 8, 1);
 
-  /// Roxo claro
-  static const Color primaryLightColor = Color.fromRGBO(222, 220, 236, 1);
+  static const Color primaryLightColor = Colors.greenAccent;
 
-  /// Azul forte
-  static const Color secondaryDarkColor = Color.fromRGBO(0, 93, 178, 1);
+  static const Color secondaryDarkColor = Colors.lightGreen;
 
-  /// Azul claro
-  static const Color secondaryLightColor = Color.fromRGBO(0, 93, 178, 0.5);
+  static const Color secondaryLightColor = Colors.lightGreenAccent;
 
-  /// Vermelho
   static const Color errorColor = Colors.red;
 
   ///Azul forte da splash

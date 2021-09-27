@@ -1,4 +1,5 @@
 import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
+import 'package:fingerprint_aps/app/core/helpers/home_page_texts.dart';
 import 'package:hive/hive.dart';
 
 part 'permissions_user_enum.g.dart';
@@ -24,5 +25,12 @@ extension PermissionsUserEnumExt on PermissionsUserEnum {
     PermissionsUserEnum.three: 'Permissão três',
   };
 
+  static const displayTextsMap = {
+    PermissionsUserEnum.one: HomePageTexts.firstPermission,
+    PermissionsUserEnum.two: HomePageTexts.secondPermission,
+    PermissionsUserEnum.three: HomePageTexts.thirdPermission,
+  };
+
   String get displayValue => displayValuesMap[this]!;
+  String get displayTextValue => displayTextsMap[this]!;
 }

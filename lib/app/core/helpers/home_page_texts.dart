@@ -1,0 +1,7 @@
+class HomePageTexts {
+  HomePageTexts._();
+
+  static const firstPermission = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consequat tellus id varius faucibus. In hac habitasse platea dictumst. Nunc convallis massa nec est vulputate congue. Aenean consequat maximus lacus, at feugiat odio dignissim non. Morbi pretium risus lectus, sit amet condimentum mauris vehicula sit amet. Cras consectetur est eget leo mollis, eu posuere arcu commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra in nunc eget scelerisque. Nulla placerat tristique dui vel rhoncus. Fusce vitae condimentum lorem.';  
+  static const secondPermission = 'Nam dignissim ac elit eget iaculis. Sed dui felis, ultricies vel lorem sed, venenatis semper dolor. Etiam eget purus rutrum, bibendum orci a, vehicula sem.';  
+  static const thirdPermission = 'Vivamus placerat dolor non eros varius, non tincidunt metus tempor. Nam gravida facilisis tempus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam quam metus, tempor et velit eget, auctor ullamcorper mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse luctus nibh eget vestibulum elementum. Morbi ex velit, facilisis vitae erat nec, maximus tincidunt libero. Pellentesque non ultricies ipsum. In hac habitasse platea dictumst. Quisque in ornare mi, eget pulvinar nibh. Mauris in augue luctus, posuere odio eu, cursus urna. Pellentesque vestibulum erat et lectus commodo dapibus ac non lectus.';  
+}

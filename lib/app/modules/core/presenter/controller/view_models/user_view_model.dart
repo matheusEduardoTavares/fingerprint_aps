@@ -6,10 +6,10 @@ class UserViewModel {
   UserViewModel({
     required this.login,
     required this.password,
-    required this.permissionsUserEnum,
+    this.permissionsUserEnum,
   });
   
   final String login;
   final String password;
-  final PermissionsUserEnum permissionsUserEnum;
+  final PermissionsUserEnum? permissionsUserEnum;
 }

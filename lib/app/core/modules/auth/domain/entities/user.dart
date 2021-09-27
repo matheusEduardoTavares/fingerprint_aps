@@ -4,6 +4,9 @@ import 'package:fingerprint_aps/app/core/helpers/hive_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 
+export 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
+export 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user_extension.dart';
+
 part 'user.g.dart';
 
 @HiveType(typeId : HiveHelper.userAdapterID)
@@ -14,6 +17,13 @@ class User {
     required this.authStatusEnum,
     required this.permissionsUserEnum,
   });
+
+  factory User.initial() => User(
+    authStatusEnum: AuthStatusEnum.empty,
+    login: '',
+    password: '',
+    permissionsUserEnum: PermissionsUserEnum.one,
+  );
 
   @HiveField(0)
   final String password;
@@ -30,5 +40,19 @@ class User {
   @override
   String toString() {
     return 'User(password: $password, login: $login, authStatusEnum: $authStatusEnum, permissionsUserEnum: $permissionsUserEnum)';
+  }
+
+  User copyWith({
+    String? password,
+    String? login,
+    AuthStatusEnum? authStatusEnum,
+    PermissionsUserEnum? permissionsUserEnum,
+  }) {
+    return User(
+      password: password ?? this.password,
+      login: login ?? this.login,
+      authStatusEnum: authStatusEnum ?? this.authStatusEnum,
+      permissionsUserEnum: permissionsUserEnum ?? this.permissionsUserEnum,
+    );
   }
 }
