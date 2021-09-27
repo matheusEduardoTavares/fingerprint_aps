@@ -33,7 +33,7 @@ class SplashPage extends StatelessWidget {
         }
       },
       child: const Scaffold(
-        backgroundColor: DefinitionColors.splashColor,
+        backgroundColor: DefinitionColors.primaryDarkColor,
         body: SplashWidget(),
       ),
     );
