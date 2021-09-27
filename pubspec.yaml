@@ -38,7 +38,7 @@ dependencies:
   flutter_modular: ^3.4.1+1
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  local_auth: ^1.1.8
+  local_auth: 1.1.6
 
 dev_dependencies:
   build_runner: ^2.1.2
