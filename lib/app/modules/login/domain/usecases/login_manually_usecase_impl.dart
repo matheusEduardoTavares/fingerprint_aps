@@ -1,6 +1,6 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/repositories/get_user_repository.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_manually_usecase.dart';
 
 class LoginManuallyUsecaseImpl implements LoginManuallyUsecase {

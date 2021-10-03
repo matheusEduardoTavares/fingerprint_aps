@@ -4,7 +4,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart'
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/controller/home_controller.dart';
 import 'package:fingerprint_aps/app/modules/home/ui/widgets/home_content/home_content.dart';
 import 'package:flutter/material.dart';
@@ -101,18 +101,33 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    final userViewModel = UserViewModel(
-                                      login: _loginController.text, 
-                                      password: _passwordController.text, 
-                                      permissionsUserEnum: _permissionsUserEnum,
+                                    FocusScope.of(context).unfocus();
+                                    if (_formKey.currentState!.validate()) {
+                                      final userViewModel = UserViewModel(
+                                        login: _loginController.text, 
+                                        password: _passwordController.text, 
+                                        permissionsUserEnum: _permissionsUserEnum,
+                                      );
+      
+                                      widget._homeController.updateUser(userViewModel);
+
+                                      return;
+                                    }
+
+                                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Arrume os campos em vermelho'),
+                                      )
                                     );
-    
-                                    widget._homeController.updateUser(userViewModel);
                                   }, 
                                   child: const Text('Atualizar dados')
                                 ),
                                 ElevatedButton(
-                                  onPressed: () => widget._homeController.deleteAccount(), 
+                                  onPressed: () {
+                                    FocusScope.of(context).unfocus();
+                                    widget._homeController.deleteAccount();
+                                  }, 
                                   child: const Text('Deletar conta')
                                 ),
                               ],

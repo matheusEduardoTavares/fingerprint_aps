@@ -15,7 +15,7 @@ import 'package:fingerprint_aps/app/modules/signup/data/drivers/signup_driver_im
 import 'package:fingerprint_aps/app/modules/signup/domain/usecases/signup_usecase_impl.dart';
 import 'package:fingerprint_aps/app/modules/signup/infra/repositories/signup_repository_impl.dart';
 import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:faker/faker.dart';
 

@@ -1,5 +1,5 @@
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    FocusScope.of(context).unfocus();
                     if (_formKey.currentState!.validate()) {
                       final userViewModel = UserViewModel(
                         login: _loginController.text,

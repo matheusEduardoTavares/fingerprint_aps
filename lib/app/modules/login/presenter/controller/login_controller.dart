@@ -3,7 +3,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_statu
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
 import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_fingerprint_authenticate_usecase.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_manually_usecase.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_update_user_usecase.dart';

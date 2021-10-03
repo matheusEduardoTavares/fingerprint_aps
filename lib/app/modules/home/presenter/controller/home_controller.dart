@@ -4,7 +4,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
 import 'package:fingerprint_aps/app/core/widgets/dialogs/confirm_dialog.dart';
 import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart';
-import 'package:fingerprint_aps/app/modules/core/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_update_user_usecase.dart';
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_user_delete_account_usecase.dart';
