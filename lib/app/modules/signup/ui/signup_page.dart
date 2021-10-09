@@ -66,38 +66,37 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(
         title: const Text('Criar conta'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 40.0),
-                  child: SplashWidget(),
-                ),
-                Column(
-                  children: [
-                    UserInfoForm(
-                      formKey: _formKey,
-                      loginController: _loginController,
-                      passwordController: _passwordController,
-                      updateDropdownValue: _updatePermissionsUserEnum,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20.0),
+                child: SplashWidget(),
+              ),
+              Column(
+                children: [
+                  UserInfoForm(
+                    formKey: _formKey,
+                    loginController: _loginController,
+                    passwordController: _passwordController,
+                    updateDropdownValue: _updatePermissionsUserEnum,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: ElevatedButton(
+                      child: const Text('Cadastrar'),
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        _validateAndSendForm();
+                      }
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: ElevatedButton(
-                        child: const Text('Cadastrar'),
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          _validateAndSendForm();
-                        }
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

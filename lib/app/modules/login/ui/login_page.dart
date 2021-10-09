@@ -37,49 +37,48 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 40.0),
-                  child: SplashWidget(),
-                ),
-                Column(
-                  children: [
-                    UserInfoForm(
-                      formKey: _formKey,
-                      loginController: _loginController,
-                      passwordController: _passwordController,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (_formKey.currentState!.validate()) {
-                          final userViewModel = UserViewModel(
-                            login: _loginController.text,
-                            password: _passwordController.text,
-                          );
-                          widget._loginController.manuallyLogin(userViewModel);
-
-                          return;
-                        }
-
-                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Arrume os campos em vermelho'),
-                          )
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20.0),
+                child: SplashWidget(),
+              ),
+              Column(
+                children: [
+                  UserInfoForm(
+                    formKey: _formKey,
+                    loginController: _loginController,
+                    passwordController: _passwordController,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      if (_formKey.currentState!.validate()) {
+                        final userViewModel = UserViewModel(
+                          login: _loginController.text,
+                          password: _passwordController.text,
                         );
-                      }, 
-                      child: const Text('Fazer Login')
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                        widget._loginController.manuallyLogin(userViewModel);
+
+                        return;
+                      }
+
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Arrume os campos em vermelho'),
+                        )
+                      );
+                    }, 
+                    child: const Text('Fazer Login')
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
