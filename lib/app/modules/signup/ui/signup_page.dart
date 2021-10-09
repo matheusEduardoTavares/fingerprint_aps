@@ -1,4 +1,5 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
+import 'package:fingerprint_aps/app/modules/loading_dependencies/ui/widgets/splash_widget.dart';
 import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
@@ -68,25 +69,33 @@ class _SignupPageState extends State<SignupPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Column(
               children: [
-                UserInfoForm(
-                  formKey: _formKey,
-                  loginController: _loginController,
-                  passwordController: _passwordController,
-                  updateDropdownValue: _updatePermissionsUserEnum,
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 40.0),
+                  child: SplashWidget(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: ElevatedButton(
-                    child: const Text('Cadastrar'),
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      _validateAndSendForm();
-                    }
-                  ),
-                )
+                Column(
+                  children: [
+                    UserInfoForm(
+                      formKey: _formKey,
+                      loginController: _loginController,
+                      passwordController: _passwordController,
+                      updateDropdownValue: _updatePermissionsUserEnum,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ElevatedButton(
+                        child: const Text('Cadastrar'),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+                          _validateAndSendForm();
+                        }
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),
