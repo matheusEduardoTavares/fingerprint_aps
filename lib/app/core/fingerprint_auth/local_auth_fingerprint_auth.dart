@@ -44,7 +44,7 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
         asuka.removeCurrentSnackBar();
         asuka.showSnackBar(
           const SnackBar(
-            content: Text('Muitas tentativas !! Aguarde ...'),
+            content: Text('Muitas tentativas!! Aguarde ...'),
             behavior: SnackBarBehavior.floating,
           )
         );

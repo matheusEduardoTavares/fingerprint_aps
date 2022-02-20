@@ -3,6 +3,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart'
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
 import 'package:fingerprint_aps/app/core/widgets/dialogs/confirm_dialog.dart';
+import 'package:fingerprint_aps/app/core/widgets/dialogs/simple_warning_dialog.dart';
 import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_update_user_usecase.dart';
@@ -31,11 +32,10 @@ class HomeController {
 
   Future<void> updateUser(UserViewModel userData) async {
     if (_authController.state.user.isEqualViewModel(userData)) {
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
-        const SnackBar(
-          content: Text('Nenhum dado foi alterado'),
-          behavior: SnackBarBehavior.floating,
+      asuka.showDialog(
+        builder: (_) => const SimpleWarningDialog(
+          content: 'Nenhum dado foi alterado',
+          title: 'Aviso',
         )
       );
 
@@ -55,11 +55,10 @@ class HomeController {
     if (!Environments.isTest) {
       LoaderEntry.hide();
 
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
-        const SnackBar(
-          content: Text('Dados atualizados com sucesso !!'),
-          behavior: SnackBarBehavior.floating,
+      asuka.showDialog(
+        builder: (_) => const SimpleWarningDialog(
+          content: 'Dados atualizados com sucesso!!',
+          title: 'Aviso',
         )
       );
     }
@@ -68,7 +67,7 @@ class HomeController {
   Future<void> logout() async {
     final confirmLogout = await asuka.showDialog<bool>(
       builder: (_) => const ConfirmDialog(
-        title: 'Deseja mesmo fazer o logout ?',
+        title: 'Deseja mesmo fazer o logout?',
       ),
     );
 
@@ -86,8 +85,8 @@ class HomeController {
   Future<void> deleteAccount() async {
     final confirmDelete = await asuka.showDialog<bool>(
       builder: (_) => const ConfirmDialog(
-        title: 'Deseja mesmo deletar a conta ?',
-        content: 'A operação NÃO poderá ser desfeita !!',
+        title: 'Deseja mesmo deletar a conta?',
+        content: 'A operação NÃO poderá ser desfeita!!',
       ),
     );
 
@@ -99,6 +98,14 @@ class HomeController {
 
     if (!Environments.isTest) {
       Modular.to.popAndPushNamed(RoutesDefinition.auth);
+
+      asuka.removeCurrentSnackBar();
+      asuka.showSnackBar(
+        const SnackBar(
+          content: Text('Conta deletada com sucesso!!'),
+          behavior: SnackBarBehavior.floating,
+        )
+      );
     }
   }
 }
