@@ -56,6 +56,8 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
     catch (_) {
       _showErrorDialog();
     } 
+
+    return null;
   }
 
   @override

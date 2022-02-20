@@ -36,9 +36,9 @@ class DefaultThemeData {
       onSecondary: Colors.black,
       onSurface: Colors.black,
       primary: DefinitionColors.primaryDarkColor,
-      primaryVariant: DefinitionColors.primaryLightColor,
+      primaryContainer: DefinitionColors.primaryLightColor,
       secondary: DefinitionColors.secondaryDarkColor,
-      secondaryVariant: DefinitionColors.secondaryLightColor,
+      secondaryContainer: DefinitionColors.secondaryLightColor,
       surface: Colors.white,
     ),
   );

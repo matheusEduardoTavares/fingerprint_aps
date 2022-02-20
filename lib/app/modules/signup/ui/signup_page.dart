@@ -1,4 +1,3 @@
-import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/ui/widgets/splash_widget.dart';
 import 'package:fingerprint_aps/app/modules/signup/presenter/controller/signup_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';

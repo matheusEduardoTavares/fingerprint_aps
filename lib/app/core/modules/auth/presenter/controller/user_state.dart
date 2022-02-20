@@ -1,5 +1,4 @@
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
-import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 
 class UserState {

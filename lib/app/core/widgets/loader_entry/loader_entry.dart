@@ -1,6 +1,5 @@
 import 'package:fingerprint_aps/app/core/theme/definition_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:asuka/asuka.dart' as asuka;
 
 class LoaderEntry {
