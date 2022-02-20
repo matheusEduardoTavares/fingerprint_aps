@@ -5,15 +5,15 @@ import 'package:fingerprint_aps/app/core/modules/auth/presenter/usecases/verify_
 
 class AuthController extends Cubit<UserState> {
   AuthController({
-    required GetUserUsecase getUserUsecaseUsecase,
+    required GetUserUsecase getUserUsecase,
   }): 
-  _getUserUsecaseUsecase = getUserUsecaseUsecase,
+  _getUserUsecase = getUserUsecase,
   super(UserState.initial());
 
-  final GetUserUsecase _getUserUsecaseUsecase;
+  final GetUserUsecase _getUserUsecase;
 
   Future<User?> getUser() async {
-    final user = await _getUserUsecaseUsecase.execute();
+    final user = await _getUserUsecase.execute();
 
     if (user != null) {
       emit(state.copyWith(user: user));

@@ -28,7 +28,7 @@ void main() {
       );
 
       _authController = AuthController(
-        getUserUsecaseUsecase: GetUserUsecaseImpl(
+        getUserUsecase: GetUserUsecaseImpl(
           getUserRepository: GetUserRepositoryImpl(
             getUserDriver: GetUserDriverImpl(
               localStorage: _localStorage!,

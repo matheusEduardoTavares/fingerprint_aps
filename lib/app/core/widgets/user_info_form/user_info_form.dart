@@ -50,6 +50,7 @@ class UserInfoForm extends StatelessWidget {
                   border: OutlineInputBorder(),
                   labelText: 'Permissões',
                 ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) => value != null ? null : 'Escolha uma opção',
                 onChanged: (value) => updateDropdownValue?.call(value!),
                 items: PermissionsUserEnumExt.displayEntries.map(

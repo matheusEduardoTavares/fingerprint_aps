@@ -23,7 +23,6 @@ class _SignupPageState extends State<SignupPage> {
 
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
-  PermissionsUserEnum? _permissionsUserEnum;
 
   @override 
   void initState() {
@@ -31,32 +30,6 @@ class _SignupPageState extends State<SignupPage> {
 
     _loginController = TextEditingController();
     _passwordController = TextEditingController();
-  }
-
-  void _updatePermissionsUserEnum(PermissionsUserEnum newPermission) {
-    setState(() {
-      _permissionsUserEnum = newPermission;
-    });
-  }
-
-  Future<void> _validateAndSendForm() async {
-    if (_formKey.currentState!.validate() && _permissionsUserEnum != null) {
-      final userViewModel = UserViewModel(
-        login: _loginController.text, 
-        password: _passwordController.text, 
-        permissionsUserEnum: _permissionsUserEnum!,
-      );
-      widget._signupController.createUser(userViewModel: userViewModel);
-
-      return;
-    }
-
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Arrume os campos em vermelho'),
-      )
-    );
   }
 
   @override
@@ -81,16 +54,20 @@ class _SignupPageState extends State<SignupPage> {
                     formKey: _formKey,
                     loginController: _loginController,
                     passwordController: _passwordController,
-                    updateDropdownValue: _updatePermissionsUserEnum,
+                    updateDropdownValue: widget._signupController.updatePermissionUserEnum,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: ElevatedButton(
                       child: const Text('Cadastrar'),
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        _validateAndSendForm();
-                      }
+                      onPressed: () => widget._signupController.createUser(
+                        userViewModel: UserViewModel(
+                          login: _loginController.text, 
+                          password: _passwordController.text, 
+                          context: context,
+                          formKey: _formKey,
+                        ),
+                      ),
                     ),
                   )
                 ],

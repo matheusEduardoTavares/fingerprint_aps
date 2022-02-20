@@ -15,31 +15,66 @@ class SignupController {
   _signupUsecase = signupUsecase;
 
   final SignupUsecase _signupUsecase;
+  final ValueNotifier<PermissionsUserEnum?> _permissionsUserEnum = ValueNotifier(null);
+
+  PermissionsUserEnum? get permissionsUserEnum => _permissionsUserEnum.value;
+
+  void updatePermissionUserEnum(PermissionsUserEnum permissionsUserEnum) {
+    _permissionsUserEnum.value = permissionsUserEnum;
+  }
 
   Future<void> createUser({
     required UserViewModel userViewModel,
   }) async {
-    try {
-      if (!Environments.isTest) {
-        LoaderEntry.show();
-      }
+    var formIsValid = true;
+    final userPermission = userViewModel.permissionsUserEnum ?? permissionsUserEnum;
 
-      await _signupUsecase.createUser(userViewModel);
+    if (!Environments.isTest) {
+      FocusScope.of(userViewModel.context!).unfocus();
 
-      if (!Environments.isTest) {
-        LoaderEntry.hide();
-        Modular.to.popAndPushNamed(RoutesDefinition.auth);
-      }
+      formIsValid = userViewModel.formKey!.currentState!.validate();
     }
-    catch (_) {
-      if (Environments.isTest) {
-        rethrow;
+
+    if (formIsValid && userPermission != null) {
+      final updatedUserViewModel = UserViewModel(
+        login: userViewModel.login, 
+        password: userViewModel.password, 
+        permissionsUserEnum: userPermission,
+      );
+
+      try {
+        if (!Environments.isTest) {
+          LoaderEntry.show();
+        }
+
+        await _signupUsecase.createUser(updatedUserViewModel);
+
+        if (!Environments.isTest) {
+          LoaderEntry.hide();
+          Modular.to.popAndPushNamed(RoutesDefinition.auth);
+        }
+      }
+      catch (_) {
+        if (Environments.isTest) {
+          rethrow;
+        }
+
+        asuka.removeCurrentSnackBar();
+        asuka.showSnackBar(
+          const SnackBar(
+            content: Text('Um erro inesperado ocorreu'),
+          )
+        );
       }
 
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
+      return;
+    }
+
+    if (!Environments.isTest) {
+      ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
+      ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
         const SnackBar(
-          content: Text('Um erro inesperado ocorreu'),
+          content: Text('Arrume os campos em vermelho'),
         )
       );
     }

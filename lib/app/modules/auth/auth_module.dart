@@ -19,7 +19,7 @@ class AuthModule extends Module {
     Bind.lazySingleton<GetUserDriver>((i) => GetUserDriverImpl(localStorage: i())),
     Bind.lazySingleton<GetUserRepository>((i) => GetUserRepositoryImpl(getUserDriver: i())),
     Bind.lazySingleton<GetUserUsecase>((i) => GetUserUsecaseImpl(getUserRepository: i())),
-    Bind.lazySingleton((i) => AuthController(getUserUsecaseUsecase: i())),
+    Bind.lazySingleton((i) => AuthController(getUserUsecase: i())),
   ];
 
    @override
