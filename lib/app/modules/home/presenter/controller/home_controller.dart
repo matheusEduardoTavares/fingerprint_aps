@@ -38,21 +38,18 @@ class HomeController {
   }
 
   Future<void> updateUser({
-    required BuildContext context,
-    required GlobalKey<FormState> formKey,
-    required String login,
-    required String password,
+    required UserViewModel userViewModel,
   }) async {
 
-    FocusScope.of(context).unfocus();
-    if (formKey.currentState!.validate()) {
-      final userViewModel = UserViewModel(
-        login: login, 
-        password: password, 
+    FocusScope.of(userViewModel.context!).unfocus();
+    if (userViewModel.formKey!.currentState!.validate()) {
+      final updatedUserViewModel = UserViewModel(
+        login: userViewModel.login, 
+        password: userViewModel.password, 
         permissionsUserEnum: permissionsUserEnum,
       );
 
-      if (_authController.state.user.isEqualViewModel(userViewModel)) {
+      if (_authController.state.user.isEqualViewModel(updatedUserViewModel)) {
         asuka.showDialog(
           builder: (_) => const SimpleWarningDialog(
             content: 'Nenhum dado foi alterado',
@@ -67,7 +64,7 @@ class HomeController {
         LoaderEntry.show();
       }
 
-      final updatedUser = await _homeUpdateUserUsecase.updateUser(userViewModel);
+      final updatedUser = await _homeUpdateUserUsecase.updateUser(updatedUserViewModel);
 
       if (updatedUser != null) {
         _authController.updateUserState(updatedUser);
@@ -87,8 +84,8 @@ class HomeController {
       return;
     }
 
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
       const SnackBar(
         content: Text('Arrume os campos em vermelho'),
       )

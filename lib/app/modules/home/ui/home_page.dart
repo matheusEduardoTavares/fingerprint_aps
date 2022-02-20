@@ -3,6 +3,7 @@ import 'package:fingerprint_aps/app/core/helpers/images_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
+import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/controller/home_controller.dart';
 import 'package:fingerprint_aps/app/modules/home/ui/widgets/home_content/home_content.dart';
@@ -101,10 +102,12 @@ class _HomePageState extends State<HomePage> {
                                 ElevatedButton(
                                   onPressed: () => 
                                     widget._homeController.updateUser(
-                                      context: context, 
-                                      formKey: _formKey, 
-                                      login: _loginController.text, 
-                                      password: _passwordController.text
+                                      userViewModel: UserViewModel(
+                                        context: context, 
+                                        formKey: _formKey, 
+                                        login: _loginController.text, 
+                                        password: _passwordController.text
+                                      ),
                                     ), 
                                   child: const Text('Atualizar dados')
                                 ),
