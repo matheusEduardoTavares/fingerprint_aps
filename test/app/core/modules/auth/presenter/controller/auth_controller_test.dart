@@ -5,7 +5,6 @@ import 'package:fingerprint_aps/app/core/local_storage/hive_local_storage.dart';
 import 'package:fingerprint_aps/app/core/local_storage/local_storage.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/data/drivers/get_user_driver_impl.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/auth_status_enum.dart';
-import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/permissions_user_enum.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/usecases/get_user_usecase_impl.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/infra/repositories/get_user_repository_impl.dart';
@@ -29,7 +28,7 @@ void main() {
       );
 
       _authController = AuthController(
-        getUserUsecaseUsecase: GetUserUsecaseImpl(
+        getUserUsecase: GetUserUsecaseImpl(
           getUserRepository: GetUserRepositoryImpl(
             getUserDriver: GetUserDriverImpl(
               localStorage: _localStorage!,

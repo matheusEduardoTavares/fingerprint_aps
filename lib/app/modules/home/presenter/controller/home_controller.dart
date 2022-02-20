@@ -3,6 +3,7 @@ import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart'
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/routes_definition/routes_definition.dart';
 import 'package:fingerprint_aps/app/core/widgets/dialogs/confirm_dialog.dart';
+import 'package:fingerprint_aps/app/core/widgets/dialogs/simple_warning_dialog.dart';
 import 'package:fingerprint_aps/app/core/widgets/loader_entry/loader_entry.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/usecases/home_update_user_usecase.dart';
@@ -28,47 +29,77 @@ class HomeController {
   final HomeUpdateUserUsecase _homeUpdateUserUsecase;
   final HomeUserLogoutUsecase _homeUserLogoutUsecase;
   final HomeUserDeleteAccountUsecase _homeUserDeleteAccountUsecase;
+  final ValueNotifier<PermissionsUserEnum?> _permissionsUserEnum = ValueNotifier(null);
 
-  Future<void> updateUser(UserViewModel userData) async {
-    if (_authController.state.user.isEqualViewModel(userData)) {
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
-        const SnackBar(
-          content: Text('Nenhum dado foi alterado'),
-          behavior: SnackBarBehavior.floating,
-        )
+  PermissionsUserEnum? get permissionsUserEnum => _permissionsUserEnum.value;
+
+  void initializePermissionUserEnum() {
+    _permissionsUserEnum.value = _authController.state.user.permissionsUserEnum;
+  }
+
+  Future<void> updateUser({
+    required UserViewModel userViewModel,
+  }) async {
+
+    FocusScope.of(userViewModel.context!).unfocus();
+    if (userViewModel.formKey!.currentState!.validate()) {
+      final updatedUserViewModel = UserViewModel(
+        login: userViewModel.login, 
+        password: userViewModel.password, 
+        permissionsUserEnum: permissionsUserEnum,
       );
+
+      if (_authController.state.user.isEqualViewModel(updatedUserViewModel)) {
+        asuka.showDialog(
+          builder: (_) => const SimpleWarningDialog(
+            content: 'Nenhum dado foi alterado',
+            title: 'Aviso',
+          )
+        );
+
+        return;
+      }
+
+      if (!Environments.isTest) {
+        LoaderEntry.show();
+      }
+
+      final updatedUser = await _homeUpdateUserUsecase.updateUser(updatedUserViewModel);
+
+      if (updatedUser != null) {
+        _authController.updateUserState(updatedUser);
+      }
+
+      if (!Environments.isTest) {
+        LoaderEntry.hide();
+
+        asuka.showDialog(
+          builder: (_) => const SimpleWarningDialog(
+            content: 'Dados atualizados com sucesso!!',
+            title: 'Aviso',
+          )
+        );
+      }
 
       return;
     }
 
-    if (!Environments.isTest) {
-      LoaderEntry.show();
-    }
+    ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
+      const SnackBar(
+        content: Text('Arrume os campos em vermelho'),
+      )
+    );
+  }
 
-    final updatedUser = await _homeUpdateUserUsecase.updateUser(userData);
-
-    if (updatedUser != null) {
-      _authController.updateUserState(updatedUser);
-    }
-
-    if (!Environments.isTest) {
-      LoaderEntry.hide();
-
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
-        const SnackBar(
-          content: Text('Dados atualizados com sucesso !!'),
-          behavior: SnackBarBehavior.floating,
-        )
-      );
-    }
+  void updatePermissionEnum(PermissionsUserEnum permissionsUserEnum) {
+    _permissionsUserEnum.value = permissionsUserEnum;
   }
 
   Future<void> logout() async {
     final confirmLogout = await asuka.showDialog<bool>(
       builder: (_) => const ConfirmDialog(
-        title: 'Deseja mesmo fazer o logout ?',
+        title: 'Deseja mesmo fazer o logout?',
       ),
     );
 
@@ -83,11 +114,13 @@ class HomeController {
     }
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteAccount(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
     final confirmDelete = await asuka.showDialog<bool>(
       builder: (_) => const ConfirmDialog(
-        title: 'Deseja mesmo deletar a conta ?',
-        content: 'A operação NÃO poderá ser desfeita !!',
+        title: 'Deseja mesmo deletar a conta?',
+        content: 'A operação NÃO poderá ser desfeita!!',
       ),
     );
 
@@ -99,6 +132,14 @@ class HomeController {
 
     if (!Environments.isTest) {
       Modular.to.popAndPushNamed(RoutesDefinition.auth);
+
+      asuka.removeCurrentSnackBar();
+      asuka.showSnackBar(
+        const SnackBar(
+          content: Text('Conta deletada com sucesso!!'),
+          behavior: SnackBarBehavior.floating,
+        )
+      );
     }
   }
 }

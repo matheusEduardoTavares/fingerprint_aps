@@ -3,8 +3,8 @@ import 'package:fingerprint_aps/app/core/helpers/images_helper.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/domain/entities/user.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/auth_controller.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/user_state.dart';
-import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:fingerprint_aps/app/modules/home/presenter/controller/home_controller.dart';
 import 'package:fingerprint_aps/app/modules/home/ui/widgets/home_content/home_content.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
-  late PermissionsUserEnum _permissionsUserEnum;
 
   @override
   void initState() {
@@ -43,7 +42,12 @@ class _HomePageState extends State<HomePage> {
 
     _loginController = TextEditingController(text: _user.login);
     _passwordController = TextEditingController(text: _user.password);
-    _permissionsUserEnum = _user.permissionsUserEnum;
+    widget._homeController.initializePermissionUserEnum();
+  }
+
+  void _updateTabAndEnumValue(int newIndex) {
+    _selectedBarIndex.value = newIndex;
+    widget._homeController.initializePermissionUserEnum();
   }
 
   @override
@@ -60,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             title: AutoSizeText(userState.user.login),
             actions: [
               IconButton(
-                onPressed: () => widget._homeController.logout(),
+                onPressed: widget._homeController.logout,
                 icon: const Icon(Icons.logout),
               ),
             ],
@@ -77,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
-                      color: Colors.white70,
+                      color: Colors.white.withOpacity(0.9),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ValueListenableBuilder(
@@ -92,42 +96,24 @@ class _HomePageState extends State<HomePage> {
                                   formKey: _formKey,
                                   loginController: _loginController,
                                   passwordController: _passwordController,
-                                  updateDropdownValue: (newValue) {
-                                    setState(() {
-                                      _permissionsUserEnum = newValue;
-                                    });
-                                  },
-                                  permissionsUserEnum: _permissionsUserEnum,
+                                  updateDropdownValue: widget._homeController.updatePermissionEnum,
+                                  permissionsUserEnum: widget._homeController.permissionsUserEnum,
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    FocusScope.of(context).unfocus();
-                                    if (_formKey.currentState!.validate()) {
-                                      final userViewModel = UserViewModel(
+                                  onPressed: () => 
+                                    widget._homeController.updateUser(
+                                      userViewModel: UserViewModel(
+                                        context: context, 
+                                        formKey: _formKey, 
                                         login: _loginController.text, 
-                                        password: _passwordController.text, 
-                                        permissionsUserEnum: _permissionsUserEnum,
-                                      );
-      
-                                      widget._homeController.updateUser(userViewModel);
-
-                                      return;
-                                    }
-
-                                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Arrume os campos em vermelho'),
-                                      )
-                                    );
-                                  }, 
+                                        password: _passwordController.text
+                                      ),
+                                    ), 
                                   child: const Text('Atualizar dados')
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    FocusScope.of(context).unfocus();
-                                    widget._homeController.deleteAccount();
-                                  }, 
+                                  onPressed: () => 
+                                    widget._homeController.deleteAccount(context), 
                                   child: const Text('Deletar conta')
                                 ),
                               ],
@@ -145,7 +131,7 @@ class _HomePageState extends State<HomePage> {
             valueListenable: _selectedBarIndex,
             builder: (_, __, ___) => BottomNavigationBar(
               currentIndex: _selectedBarIndex.value,
-              onTap: (newIndex) => _selectedBarIndex.value = newIndex,
+              onTap: _updateTabAndEnumValue,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.nature_outlined),

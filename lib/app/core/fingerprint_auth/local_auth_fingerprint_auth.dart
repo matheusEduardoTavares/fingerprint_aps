@@ -44,7 +44,7 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
         asuka.removeCurrentSnackBar();
         asuka.showSnackBar(
           const SnackBar(
-            content: Text('Muitas tentativas !! Aguarde ...'),
+            content: Text('Muitas tentativas!! Aguarde ...'),
             behavior: SnackBarBehavior.floating,
           )
         );
@@ -56,10 +56,14 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
     catch (_) {
       _showErrorDialog();
     } 
+
+    return null;
   }
 
   @override
   Future<bool> canUseBiometrics() async {
-    return useBiometrics = await _instance.canCheckBiometrics;
+    final isDeviceSupported = await _instance.isDeviceSupported(); 
+    final canCheckBiometrics = await _instance.canCheckBiometrics;
+    return useBiometrics = isDeviceSupported && canCheckBiometrics;
   }
 }

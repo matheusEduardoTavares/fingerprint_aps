@@ -52,27 +52,42 @@ class LoginController {
     }
   }
 
-  Future<void> manuallyLogin(UserViewModel userData) async {
-    if (!Environments.isTest) {
-      LoaderEntry.show();
+  Future<void> manuallyLogin({
+    required UserViewModel userViewModel,
+  }) async {
+    FocusScope.of(userViewModel.context!).unfocus();
+    
+    if (userViewModel.formKey!.currentState!.validate()) {
+      if (!Environments.isTest) {
+        LoaderEntry.show();
+      }
+
+      final canMakeLogin = await _loginManuallyUsecase.doLogin(userViewModel);
+
+      if (canMakeLogin != null && canMakeLogin) {
+        await _makeLogin();
+      }
+      else {
+        asuka.removeCurrentSnackBar();
+        asuka.showSnackBar(
+          const SnackBar(
+            content: Text('Login ou Senha inválidos'),
+          )
+        );
+      }
+
+      if (!Environments.isTest) {
+        LoaderEntry.hide();
+      }
+
+      return;
     }
 
-    final canMakeLogin = await _loginManuallyUsecase.doLogin(userData);
-
-    if (canMakeLogin != null && canMakeLogin) {
-      await _makeLogin();
-    }
-    else {
-      asuka.removeCurrentSnackBar();
-      asuka.showSnackBar(
-        const SnackBar(
-          content: Text('Login ou Senha inválidos'),
-        )
-      );
-    }
-
-    if (!Environments.isTest) {
-      LoaderEntry.hide();
-    }
+    ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
+    ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
+      const SnackBar(
+        content: Text('Arrume os campos em vermelho'),
+      )
+    );
   }
 }

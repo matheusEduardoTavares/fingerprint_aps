@@ -1,5 +1,5 @@
-import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
+import 'package:fingerprint_aps/app/core/widgets/user_info_form/user_info_form.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/ui/widgets/splash_widget.dart';
 import 'package:fingerprint_aps/app/modules/login/presenter/controller/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -55,25 +55,14 @@ class _LoginPageState extends State<LoginPage> {
                     passwordController: _passwordController,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      FocusScope.of(context).unfocus();
-                      if (_formKey.currentState!.validate()) {
-                        final userViewModel = UserViewModel(
-                          login: _loginController.text,
-                          password: _passwordController.text,
-                        );
-                        widget._loginController.manuallyLogin(userViewModel);
-
-                        return;
-                      }
-
-                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Arrume os campos em vermelho'),
-                        )
-                      );
-                    }, 
+                    onPressed: () => widget._loginController.manuallyLogin(
+                      userViewModel: UserViewModel(
+                        context: context,
+                        formKey: _formKey,
+                        login: _loginController.text,
+                        password: _passwordController.text,  
+                      ),
+                    ), 
                     child: const Text('Fazer Login')
                   ),
                 ],
@@ -84,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.fingerprint),
-        onPressed: () => widget._loginController.authenticate(),
+        onPressed: widget._loginController.authenticate,
       ),
     );
   }

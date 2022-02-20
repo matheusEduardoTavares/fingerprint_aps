@@ -2,23 +2,37 @@ class HomePageTexts {
   HomePageTexts._();
 
   static const firstPermission = 
-    'A utilização de Agrotóxico no Brasil, é o segundo maior causador de contaminaçãos nos rios, perdendo apenas para o esgoto doméstico.\n'
-    'No ano de 2012 utilizava-se 19% de todo o defensivo agricola produzido no planeta, e onde 99% dos venenos que são utilizados em lavouras acabam por não atingir a praga alvo, indo assim para os rios, solo e para a água subterranea.\n'
-    'Assim sempre que detectado o aparecimemento de agrotóxicos nas reservas de àgua subterranea , precisamos estar tomando todas as medidas para evitar o agravemento do problema principalmente nos rios e mares onde sempre é detectada uma quantidade maior de residuos de agrotóxicos.\n'
-    'O problema se dá quando a agua pe contaminada por defensivos agricolas onde a detecção é mais dificil , para estar tomando as devidas medidas administrativas e para estar removendo as substancias da agua.';
+    'Pellentesque non est velit. \n' 
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. \n'
+    'Morbi faucibus eleifend nunc in hendrerit. Curabitur aliquam elementum \n'
+    'lectus, nec tempus sem. Etiam nisl nulla, luctus ac interdum id, \n'
+    'blandit vitae justo. Donec et magna suscipit risus auctor accumsan. \n'
+    'Sed nec porttitor est. Pellentesque venenatis justo nec blandit lacinia. \n'
+    'Pellentesque at sagittis metus.';
 
   static const secondPermission = 
-    'Sendo o estado de São Paulo um grande produtor de uma vasta variedade de culturas e de agricultura , ele também é o responsabel por um consumo de 70\$ do consumo de àgua no Brasil.\n'
-    'Onde esse recurso é vital para a atividade agricula, mas nem por isso deixa de estar degradando tal.\n'
-    'A poluição hidrica que é causada no estado por produção agrícolas insustentável, é totalmente marcada pelo abuso na utilização de agrotóxicos e de outros produtos agroquímicos.\n'
-    'Produtos esses que ao serem utilizados acabam parando em rios lagos e nas reservas subterrâneas , fazendo um expoente crescimento na poluição das aguas do nosso estado e consequentemente do nosso pais.\n'
-    'A ONU alerta atráves de um relatório onde o número de pessoas sendo infectadas por uma água de má qualidade, em decorrencia do uso de agrotóxicos só vem aumentando, e preocupando a organização que está com os olhos voltados para o instituto internacional de gestão de água para averiguar quais ações serão tomadas pelo governo para a diminuição de tal problema.';
+    'Proin vel mi malesuada, suscipit quam sed, finibus ipsum. \n'
+    'Etiam hendrerit luctus sapien. Aliquam vestibulum sed velit sed luctus. \n'
+    'Duis eget diam finibus, efficitur est et, gravida nulla. In fringilla \n'
+    'lectus eu nulla dapibus euismod. In elementum dolor ut imperdiet scelerisque. \n'
+    'Phasellus maximus sit amet urna vel volutpat. Aenean scelerisque, \n'
+    'lorem sed feugiat molestie, tortor elit tristique nulla, sit amet vulputate\n'
+    ' lorem quam vitae neque. Aenean nisl dui, feugiat ac libero rhoncus, \n'
+    'efficitur dignissim felis. Duis mollis, risus in semper pretium, quam lacus\n'
+    ' aliquet enim, sed mollis diam quam in tellus. Etiam vitae mauris nisl. Proin\n'
+    ' quis neque sed leo aliquam elementum. Nam suscipit elit nec libero ultricies, \n'
+    'et tempor neque finibus.';
 
   static const thirdPermission = 
-    'A melhor técnica para a contenção e diminuição do uso de agrotóxicos proibidos, será o manejo integrado de pragas, onde esse projeto consiste em utilizar recursos naturais para propor soluções para o desuso de agrotóxicos, sendo essas ações mais rentáveis para a agricultura.\n'
-    'Os insetos continuam nas lavouras mas não oferencendo risco a produção, mas ocorrendo isso apenas com o acompanhamento constante do controle das pragas para ter uma maior eficacia.\n'
-    'Esse método é dividido em três etapas básicas: avaliação do agroecossistema, tomada de decisão e seleção dos métodos de controle a serem adotados.\n'
-    'Essa primeira etapa se dá em determinar a densidade populacional das pragas por meio de amostragens ou monitoramento.\n'
-    'Segunda etapa, tomada de decisão, tendo como base os dados da primeira etapa, é feita a tomada de decisão de onde serão analisados os aspectos econômicos da cultura, e como está a relação de custo x beneficio do controle de pragas.\n'
-    'Terceira Etapa, seleção de métodos de controle, se for necessario tomar algum tipo de controle, o produtor deve optar por algum sistema que agregue mais de um método de controle.';
+    'Cras accumsan rutrum libero et maximus. Vivamus eleifend orci eu placerat'
+    ' tristique. Maecenas velit lorem, tempus ac venenatis nec, rutrum laoreet lorem. '
+    'Nunc sit amet nulla rhoncus, dictum dolor aliquet, tincidunt quam. '
+    'Nunc quis dolor elit. Curabitur condimentum lacus quis sapien porta, '
+    'molestie pulvinar sapien ornare. Vestibulum ante ipsum primis in faucibus orci '
+    'luctus et ultrices posuere cubilia curae; In hac habitasse platea dictumst. '
+    'Curabitur et nibh aliquet, volutpat lorem et, sollicitudin erat. In consectetur '
+    'massa at tristique faucibus. Pellentesque feugiat ex quis nisl luctus posuere. '
+    'Suspendisse ligula neque, ornare eu pellentesque nec, dapibus vel risus. '
+    'Suspendisse quis eros non leo auctor fermentum. Sed lobortis tellus vitae nisi '
+    'bibendum egestas ut scelerisque nisi. Pellentesque nec accumsan leo.';
 }
