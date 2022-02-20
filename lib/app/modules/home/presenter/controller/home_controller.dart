@@ -29,39 +29,74 @@ class HomeController {
   final HomeUpdateUserUsecase _homeUpdateUserUsecase;
   final HomeUserLogoutUsecase _homeUserLogoutUsecase;
   final HomeUserDeleteAccountUsecase _homeUserDeleteAccountUsecase;
+  final ValueNotifier<PermissionsUserEnum?> _permissionsUserEnum = ValueNotifier(null);
 
-  Future<void> updateUser(UserViewModel userData) async {
-    if (_authController.state.user.isEqualViewModel(userData)) {
-      asuka.showDialog(
-        builder: (_) => const SimpleWarningDialog(
-          content: 'Nenhum dado foi alterado',
-          title: 'Aviso',
-        )
+  PermissionsUserEnum? get permissionsUserEnum => _permissionsUserEnum.value;
+
+  void initializePermissionUserEnum() {
+    _permissionsUserEnum.value = _authController.state.user.permissionsUserEnum;
+  }
+
+  Future<void> updateUser({
+    required BuildContext context,
+    required GlobalKey<FormState> formKey,
+    required String login,
+    required String password,
+  }) async {
+
+    FocusScope.of(context).unfocus();
+    if (formKey.currentState!.validate()) {
+      final userViewModel = UserViewModel(
+        login: login, 
+        password: password, 
+        permissionsUserEnum: permissionsUserEnum,
       );
+
+      if (_authController.state.user.isEqualViewModel(userViewModel)) {
+        asuka.showDialog(
+          builder: (_) => const SimpleWarningDialog(
+            content: 'Nenhum dado foi alterado',
+            title: 'Aviso',
+          )
+        );
+
+        return;
+      }
+
+      if (!Environments.isTest) {
+        LoaderEntry.show();
+      }
+
+      final updatedUser = await _homeUpdateUserUsecase.updateUser(userViewModel);
+
+      if (updatedUser != null) {
+        _authController.updateUserState(updatedUser);
+      }
+
+      if (!Environments.isTest) {
+        LoaderEntry.hide();
+
+        asuka.showDialog(
+          builder: (_) => const SimpleWarningDialog(
+            content: 'Dados atualizados com sucesso!!',
+            title: 'Aviso',
+          )
+        );
+      }
 
       return;
     }
 
-    if (!Environments.isTest) {
-      LoaderEntry.show();
-    }
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Arrume os campos em vermelho'),
+      )
+    );
+  }
 
-    final updatedUser = await _homeUpdateUserUsecase.updateUser(userData);
-
-    if (updatedUser != null) {
-      _authController.updateUserState(updatedUser);
-    }
-
-    if (!Environments.isTest) {
-      LoaderEntry.hide();
-
-      asuka.showDialog(
-        builder: (_) => const SimpleWarningDialog(
-          content: 'Dados atualizados com sucesso!!',
-          title: 'Aviso',
-        )
-      );
-    }
+  void updatePermissionEnum(PermissionsUserEnum permissionsUserEnum) {
+    _permissionsUserEnum.value = permissionsUserEnum;
   }
 
   Future<void> logout() async {
@@ -82,7 +117,9 @@ class HomeController {
     }
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteAccount(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+
     final confirmDelete = await asuka.showDialog<bool>(
       builder: (_) => const ConfirmDialog(
         title: 'Deseja mesmo deletar a conta?',

@@ -12,4 +12,16 @@ class UserViewModel {
   final String login;
   final String password;
   final PermissionsUserEnum? permissionsUserEnum;
+
+  UserViewModel copyWith({
+    String? login,
+    String? password,
+    PermissionsUserEnum? permissionsUserEnum,
+  }) {
+    return UserViewModel(
+      login: login ?? this.login,
+      password: password ?? this.password,
+      permissionsUserEnum: permissionsUserEnum ?? this.permissionsUserEnum,
+    );
+  }
 }
