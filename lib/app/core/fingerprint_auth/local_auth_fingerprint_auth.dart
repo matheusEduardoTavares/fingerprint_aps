@@ -62,6 +62,8 @@ class LocalAuthFingerprintAuth implements FingerprintAuth {
 
   @override
   Future<bool> canUseBiometrics() async {
-    return useBiometrics = await _instance.canCheckBiometrics;
+    final isDeviceSupported = await _instance.isDeviceSupported(); 
+    final canCheckBiometrics = await _instance.canCheckBiometrics;
+    return useBiometrics = isDeviceSupported && canCheckBiometrics;
   }
 }
