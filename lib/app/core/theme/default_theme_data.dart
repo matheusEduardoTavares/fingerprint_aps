@@ -24,7 +24,7 @@ class DefaultThemeData {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: DefinitionColors.primaryDarkColor,
       selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.black54,
+      unselectedItemColor: Colors.grey,
     ),
     colorScheme: const ColorScheme(
       background: Colors.white,

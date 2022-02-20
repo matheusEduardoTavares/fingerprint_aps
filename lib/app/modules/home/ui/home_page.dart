@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
-                      color: Colors.white70,
+                      color: Colors.white.withOpacity(0.9),
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ValueListenableBuilder(
