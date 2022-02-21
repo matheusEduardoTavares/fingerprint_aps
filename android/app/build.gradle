@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.fingerprint_aps"
+        applicationId "br.com.matheuseduardotavares.fingerprint_aps"
         minSdkVersion 21
         targetSdkVersion sdkVersion
         versionCode flutterVersionCode.toInteger()

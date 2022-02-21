@@ -1,4 +1,4 @@
-package com.example.fingerprint_aps
+package br.com.matheuseduardotavares.fingerprint_aps
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugins.GeneratedPluginRegistrant
