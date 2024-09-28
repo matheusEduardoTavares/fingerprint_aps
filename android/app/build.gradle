@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    def sdkVersion = 31;
+    def sdkVersion = 34;
 
     compileSdkVersion sdkVersion
 
@@ -52,7 +52,7 @@ android {
     defaultConfig {
         applicationId "br.com.matheuseduardotavares.fingerprint_aps"
         minSdkVersion 21
-        targetSdkVersion sdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
