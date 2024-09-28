@@ -2,7 +2,7 @@ name: fingerprint_aps
 description: Project created to present the PHC work of the college in the sixth semester. This project was made with Flutter into a mobile application, using some libraries such as local_auth, hive, flutter_modular, flutter_bloc, etc. This project was make with clean architecture. 
 
 publish_to: 'none'
-version: 1.0.6+6
+version: 1.0.7+7
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
