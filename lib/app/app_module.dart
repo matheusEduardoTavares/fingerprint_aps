@@ -4,9 +4,10 @@ import 'package:fingerprint_aps/app/modules/loading_dependencies/loading_depende
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
-  @override 
-  final List<ModularRoute> routes = [
-    ModuleRoute(Modular.initialRoute, module: LoadingDependenciesModules()),
-    ModuleRoute(RoutesDefinition.auth, module: AuthModule()),
-  ];
+  @override
+  void routes(RouteManager r) {
+    r
+      ..module(Modular.initialRoute, module: LoadingDependenciesModules())
+      ..module(RoutesDefinition.auth, module: AuthModule());
+  }
 }

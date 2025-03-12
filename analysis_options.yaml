@@ -76,5 +76,7 @@ linter:
     omit_local_variable_types: false
 
 analyzer:
+  errors:
+    avoid_dynamic_calls: ignore
   exclude:
     - lib/**.g.dart

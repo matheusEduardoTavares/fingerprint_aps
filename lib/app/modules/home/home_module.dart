@@ -21,27 +21,43 @@ import 'package:fingerprint_aps/app/modules/home/ui/home_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeModule extends Module {
+  @override
+  void binds(Injector i) {
+    i
+      ..addLazySingleton<HomeUpdateUserDriver>(
+          (i) => HomeUpdateUserDriverImpl(localStorage: i()))
+      ..addLazySingleton<HomeUpdateUserRepository>(
+          (i) => HomeUpdateUserRepositoryImpl(homeUpdateUserDriver: i()))
+      ..addLazySingleton<HomeUpdateUserUsecase>(
+          (i) => HomeUpdateUserUsecaseImpl(homeUpdateUserRepository: i()))
+      ..addLazySingleton<HomeUserLogoutDriver>(
+          (i) => HomeUserLogoutDriverImpl(localStorage: i()))
+      ..addLazySingleton<HomeUserLogoutRepository>(
+          (i) => HomeUserLogoutRepositoryImpl(homeUserLogoutDriver: i()))
+      ..addLazySingleton<HomeUserLogoutUsecase>(
+          (i) => HomeUserLogoutUsecaseImpl(homeUserLogoutRepository: i()))
+      ..addLazySingleton<HomeUserDeleteAccountDriver>(
+          (i) => HomeUserDeleteAccountDriverImpl(localStorage: i()))
+      ..addLazySingleton<HomeUserDeleteAccountRepository>((i) =>
+          HomeUserDeleteAccountRepositoryImpl(homeUserDeleteAccountDriver: i()))
+      ..addLazySingleton<HomeUserDeleteAccountUsecase>((i) =>
+          HomeUserDeleteAccountUsecaseImpl(
+              homeUserDeleteAccountRepository: i()))
+      ..addLazySingleton(
+        (i) => HomeController(
+            authController: i(),
+            homeUpdateUserUsecase: i(),
+            homeUserLogoutUsecase: i(),
+            homeUserDeleteAccountUsecase: i()),
+      );
+  }
 
-   @override
-   final List<Bind> binds = [
-
-    Bind.lazySingleton<HomeUpdateUserDriver>((i) => HomeUpdateUserDriverImpl(localStorage: i())),
-    Bind.lazySingleton<HomeUpdateUserRepository>((i) => HomeUpdateUserRepositoryImpl(homeUpdateUserDriver: i())),
-    Bind.lazySingleton<HomeUpdateUserUsecase>((i) => HomeUpdateUserUsecaseImpl(homeUpdateUserRepository: i())),
-
-    Bind.lazySingleton<HomeUserLogoutDriver>((i) => HomeUserLogoutDriverImpl(localStorage: i())),
-    Bind.lazySingleton<HomeUserLogoutRepository>((i) => HomeUserLogoutRepositoryImpl(homeUserLogoutDriver: i())),
-    Bind.lazySingleton<HomeUserLogoutUsecase>((i) => HomeUserLogoutUsecaseImpl(homeUserLogoutRepository: i())),
-    
-    Bind.lazySingleton<HomeUserDeleteAccountDriver>((i) => HomeUserDeleteAccountDriverImpl(localStorage: i())),
-    Bind.lazySingleton<HomeUserDeleteAccountRepository>((i) => HomeUserDeleteAccountRepositoryImpl(homeUserDeleteAccountDriver: i())),
-    Bind.lazySingleton<HomeUserDeleteAccountUsecase>((i) => HomeUserDeleteAccountUsecaseImpl(homeUserDeleteAccountRepository: i())),
-
-    Bind.lazySingleton((i) => HomeController(authController: i(), homeUpdateUserUsecase: i(), homeUserLogoutUsecase: i(), homeUserDeleteAccountUsecase: i()))
-   ];
-
-   @override
-   final List<ModularRoute> routes = [
-     ChildRoute(Modular.initialRoute, child: (_, args) => HomePage(authController: Modular.get(), homeController: Modular.get(),)),
-   ];
+  @override
+  void routes(RouteManager r) {
+    r.child(Modular.initialRoute,
+        child: (_) => HomePage(
+              authController: Modular.get(),
+              homeController: Modular.get(),
+            ));
+  }
 }

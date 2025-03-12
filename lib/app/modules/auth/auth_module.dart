@@ -15,23 +15,33 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class AuthModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind.lazySingleton<GetUserDriver>((i) => GetUserDriverImpl(localStorage: i())),
-    Bind.lazySingleton<GetUserRepository>((i) => GetUserRepositoryImpl(getUserDriver: i())),
-    Bind.lazySingleton<GetUserUsecase>((i) => GetUserUsecaseImpl(getUserRepository: i())),
-    Bind.lazySingleton((i) => AuthController(getUserUsecase: i())),
-  ];
-
-   @override
-  List<Module> get imports => [
-    CoreModule(),
-  ];
+  void binds(Injector i) {
+    i
+      ..addLazySingleton<GetUserDriver>(
+          (i) => GetUserDriverImpl(localStorage: i()))
+      ..addLazySingleton<GetUserRepository>(
+          (i) => GetUserRepositoryImpl(getUserDriver: i()))
+      ..addLazySingleton<GetUserUsecase>(
+          (i) => GetUserUsecaseImpl(getUserRepository: i()))
+      ..addLazySingleton(
+        (i) => AuthController(getUserUsecase: i()),
+      );
+  }
 
   @override
-  final List<ModularRoute> routes = [
-    ChildRoute(Modular.initialRoute, child: (_, args) => AuthPage(authController: Modular.get(),)),
-    ModuleRoute(RoutesDefinition.home, module: HomeModule()),
-    ModuleRoute(RoutesDefinition.login, module: LoginModule()),
-    ModuleRoute(RoutesDefinition.signup, module: SignupModule()),
-  ];
+  List<Module> get imports => [
+        CoreModule(),
+      ];
+
+  @override
+  void routes(RouteManager r) {
+    r
+      ..child(Modular.initialRoute,
+          child: (_) => AuthPage(
+                authController: Modular.get(),
+              ))
+      ..module(RoutesDefinition.home, module: HomeModule())
+      ..module(RoutesDefinition.login, module: LoginModule())
+      ..module(RoutesDefinition.signup, module: SignupModule());
+  }
 }

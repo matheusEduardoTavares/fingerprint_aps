@@ -14,24 +14,40 @@ import 'package:fingerprint_aps/app/modules/login/ui/login_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginModule extends Module {
-   @override
-   final List<Bind> binds = [
-     Bind.lazySingleton<LoginFingerprintAuthenticateUsecase>((i) => LoginFingerprintAuthenticateUsecaseImpl(fingerprintAuth: i())),
-     Bind.lazySingleton<LoginManuallyUsecase>((i) => LoginManuallyUsecaseImpl(getUserRepository: i())),
+  @override
+  void binds(Injector i) {
+    i
+      ..addLazySingleton<LoginFingerprintAuthenticateUsecase>(
+          (i) => LoginFingerprintAuthenticateUsecaseImpl(fingerprintAuth: i()))
+      ..addLazySingleton<LoginManuallyUsecase>(
+          (i) => LoginManuallyUsecaseImpl(getUserRepository: i()))
+      ..addLazySingleton<LoginUpdateUserDriver>(
+          (i) => LoginUpdateUserDriverImpl(localStorage: i()))
+      ..addLazySingleton<LoginUpdateUserRepository>(
+          (i) => LoginUpdateUserRepositoryImpl(loginUpdateUserDriver: i()))
+      ..addLazySingleton<LoginUpdateUserUsecase>(
+          (i) => LoginUpdateUserUsecaseImpl(loginUpdateUserRepository: i()))
+      ..addLazySingleton<LoginManuallyUsecase>(
+          (i) => LoginManuallyUsecaseImpl(getUserRepository: i()))
+      ..addLazySingleton((i) => LoginController(
+          loginFingerprintAuthenticateUsecase: i(),
+          authController: i(),
+          loginManuallyUsecase: i(),
+          loginUpdateUserUsecase: i()));
+  }
 
-     Bind.lazySingleton<LoginUpdateUserDriver>((i) => LoginUpdateUserDriverImpl(localStorage: i())),
-     Bind.lazySingleton<LoginUpdateUserRepository>((i) => LoginUpdateUserRepositoryImpl(loginUpdateUserDriver: i())),
-     Bind.lazySingleton<LoginUpdateUserUsecase>((i) => LoginUpdateUserUsecaseImpl(loginUpdateUserRepository: i())),
-     Bind.lazySingleton((i) => LoginController(loginFingerprintAuthenticateUsecase: i(), authController: i(), loginManuallyUsecase: i(), loginUpdateUserUsecase: i()))
-   ];
+  @override
+  List<Module> get imports => [
+        CoreModule(),
+      ];
 
-   @override
-   List<Module> get imports => [
-     CoreModule(),
-   ];
-
-   @override
-   final List<ModularRoute> routes = [
-     ChildRoute(Modular.initialRoute, child: (_, args) => LoginPage(loginController: Modular.get(),)),
-   ];
+  @override
+  void routes(RouteManager r) {
+    r.child(
+      Modular.initialRoute,
+      child: (_) => LoginPage(
+        loginController: Modular.get(),
+      ),
+    );
+  }
 }

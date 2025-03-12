@@ -11,14 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({ 
+  const HomePage({
     required AuthController authController,
     required HomeController homeController,
     Key? key,
-  }) : 
-  _authController = authController,
-  _homeController = homeController,
-  super(key: key);
+  })  : _authController = authController,
+        _homeController = homeController,
+        super(key: key);
 
   final AuthController _authController;
   final HomeController _homeController;
@@ -53,103 +52,106 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthController, UserState?>(
-      bloc: widget._authController,
-      builder: (context, userState) {
-        if (userState == null) {
-          return const SizedBox(height: 0, width: 0,);
-        }
-      
-        return Scaffold(
-          appBar: AppBar(
-            title: AutoSizeText(userState.user.login),
-            actions: [
-              IconButton(
-                onPressed: widget._homeController.logout,
-                icon: const Icon(Icons.logout),
-              ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              Image.asset(
-                ImagesHelper.nature,
-                height: MediaQuery.of(context).size.height,
-                fit: BoxFit.cover,
-              ),
-              Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      color: Colors.white.withOpacity(0.9),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ValueListenableBuilder(
-                          valueListenable: _selectedBarIndex,
-                          builder: (_, __, ___) => [
-                            HomeContent(
-                              permissionsUserEnum: userState.user.permissionsUserEnum,
-                            ),
-                            Column(
-                              children: [
-                                UserInfoForm(
-                                  formKey: _formKey,
-                                  loginController: _loginController,
-                                  passwordController: _passwordController,
-                                  updateDropdownValue: widget._homeController.updatePermissionEnum,
-                                  permissionsUserEnum: widget._homeController.permissionsUserEnum,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => 
-                                    widget._homeController.updateUser(
-                                      userViewModel: UserViewModel(
-                                        context: context, 
-                                        formKey: _formKey, 
-                                        login: _loginController.text, 
-                                        password: _passwordController.text
-                                      ),
-                                    ), 
-                                  child: const Text('Atualizar dados')
-                                ),
-                                ElevatedButton(
-                                  onPressed: () => 
-                                    widget._homeController.deleteAccount(context), 
-                                  child: const Text('Deletar conta')
-                                ),
-                              ],
-                            ),
-                          ][_selectedBarIndex.value],
+        bloc: widget._authController,
+        builder: (context, userState) {
+          if (userState == null) {
+            return const SizedBox(
+              height: 0,
+              width: 0,
+            );
+          }
+
+          return Scaffold(
+            appBar: AppBar(
+              title: AutoSizeText(userState.user.login),
+              actions: [
+                IconButton(
+                  onPressed: widget._homeController.logout,
+                  icon: const Icon(Icons.logout),
+                ),
+              ],
+            ),
+            body: Stack(
+              children: [
+                Image.asset(
+                  ImagesHelper.nature,
+                  height: MediaQuery.of(context).size.height,
+                  fit: BoxFit.cover,
+                ),
+                Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        color: Colors.white.withAlpha(229),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ValueListenableBuilder(
+                            valueListenable: _selectedBarIndex,
+                            builder: (_, __, ___) => [
+                              HomeContent(
+                                permissionsUserEnum:
+                                    userState.user.permissionsUserEnum,
+                              ),
+                              Column(
+                                children: [
+                                  UserInfoForm(
+                                    formKey: _formKey,
+                                    loginController: _loginController,
+                                    passwordController: _passwordController,
+                                    updateDropdownValue: widget
+                                        ._homeController.updatePermissionEnum,
+                                    permissionsUserEnum: widget
+                                        ._homeController.permissionsUserEnum,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          widget._homeController.updateUser(
+                                            userViewModel: UserViewModel(
+                                                context: context,
+                                                formKey: _formKey,
+                                                login: _loginController.text,
+                                                password:
+                                                    _passwordController.text),
+                                          ),
+                                      child: const Text('Atualizar dados')),
+                                  ElevatedButton(
+                                      onPressed: () => widget._homeController
+                                          .deleteAccount(context),
+                                      child: const Text('Deletar conta')),
+                                ],
+                              ),
+                            ][_selectedBarIndex.value],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: ValueListenableBuilder(
-            valueListenable: _selectedBarIndex,
-            builder: (_, __, ___) => BottomNavigationBar(
-              currentIndex: _selectedBarIndex.value,
-              onTap: _updateTabAndEnumValue,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.nature_outlined),
-                  label: 'Informações',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline),
-                  label: 'Dados',
-                ),
               ],
             ),
-          ),
-        );
-      }
-    );
+            bottomNavigationBar: ValueListenableBuilder(
+              valueListenable: _selectedBarIndex,
+              builder: (_, __, ___) => BottomNavigationBar(
+                currentIndex: _selectedBarIndex.value,
+                onTap: _updateTabAndEnumValue,
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.nature_outlined),
+                    label: 'Informações',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline),
+                    label: 'Dados',
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
-  @override 
+  @override
   void dispose() {
     _loginController.dispose();
     _passwordController.dispose();

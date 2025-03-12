@@ -5,17 +5,16 @@ import 'package:fingerprint_aps/app/modules/signup/presenter/usecases/signup_use
 import 'package:fingerprint_aps/app/core/modules/auth/presenter/controller/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:asuka/asuka.dart';
 
 class SignupController {
-
   SignupController({
     required SignupUsecase signupUsecase,
-  }) : 
-  _signupUsecase = signupUsecase;
+  }) : _signupUsecase = signupUsecase;
 
   final SignupUsecase _signupUsecase;
-  final ValueNotifier<PermissionsUserEnum?> _permissionsUserEnum = ValueNotifier(null);
+  final ValueNotifier<PermissionsUserEnum?> _permissionsUserEnum =
+      ValueNotifier(null);
 
   PermissionsUserEnum? get permissionsUserEnum => _permissionsUserEnum.value;
 
@@ -27,7 +26,8 @@ class SignupController {
     required UserViewModel userViewModel,
   }) async {
     var formIsValid = true;
-    final userPermission = userViewModel.permissionsUserEnum ?? permissionsUserEnum;
+    final userPermission =
+        userViewModel.permissionsUserEnum ?? permissionsUserEnum;
 
     if (!Environments.isTest) {
       FocusScope.of(userViewModel.context!).unfocus();
@@ -37,8 +37,8 @@ class SignupController {
 
     if (formIsValid && userPermission != null) {
       final updatedUserViewModel = UserViewModel(
-        login: userViewModel.login, 
-        password: userViewModel.password, 
+        login: userViewModel.login,
+        password: userViewModel.password,
         permissionsUserEnum: userPermission,
       );
 
@@ -53,18 +53,16 @@ class SignupController {
           LoaderEntry.hide();
           Modular.to.popAndPushNamed(RoutesDefinition.auth);
         }
-      }
-      catch (_) {
+      } catch (_) {
         if (Environments.isTest) {
           rethrow;
         }
 
-        asuka.removeCurrentSnackBar();
-        asuka.showSnackBar(
-          const SnackBar(
+        Asuka
+          ..removeCurrentSnackBar()
+          ..showSnackBar(const SnackBar(
             content: Text('Um erro inesperado ocorreu'),
-          )
-        );
+          ));
       }
 
       return;
@@ -72,11 +70,9 @@ class SignupController {
 
     if (!Environments.isTest) {
       ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
-      ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
-        const SnackBar(
-          content: Text('Arrume os campos em vermelho'),
-        )
-      );
+      ScaffoldMessenger.of(userViewModel.context!).showSnackBar(const SnackBar(
+        content: Text('Arrume os campos em vermelho'),
+      ));
     }
   }
 }

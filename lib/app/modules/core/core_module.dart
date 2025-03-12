@@ -7,11 +7,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class CoreModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind.lazySingleton<LocalStorage>(
-      (i) => HiveLocalStorage(boxKey: HiveHelper.userBoxKey),
-      export: true
-    ),
-    Bind.lazySingleton<FingerprintAuth>((i) => LocalAuthFingerprintAuth(), export: true),
-  ];
+  void exportedBinds(Injector i) {
+    i
+      ..addLazySingleton<LocalStorage>(
+        (i) => HiveLocalStorage(boxKey: HiveHelper.userBoxKey),
+      )
+      ..addLazySingleton<FingerprintAuth>(
+        (i) => LocalAuthFingerprintAuth(),
+      );
+  }
 }

@@ -17,9 +17,8 @@ class DefaultThemeData {
       centerTitle: true,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: DefinitionColors.primaryDarkColor,
-      foregroundColor: Colors.white
-    ),
+        backgroundColor: DefinitionColors.primaryDarkColor,
+        foregroundColor: Colors.white),
     primaryColor: DefinitionColors.primaryDarkColor,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: DefinitionColors.primaryDarkColor,
@@ -27,10 +26,8 @@ class DefaultThemeData {
       unselectedItemColor: Colors.grey,
     ),
     colorScheme: const ColorScheme(
-      background: Colors.white,
       brightness: Brightness.light,
       error: DefinitionColors.errorColor,
-      onBackground: Colors.black,
       onError: Colors.black,
       onPrimary: Colors.white,
       onSecondary: Colors.black,

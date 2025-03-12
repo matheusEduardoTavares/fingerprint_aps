@@ -9,18 +9,25 @@ import 'package:fingerprint_aps/app/modules/signup/ui/signup_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class SignupModule extends Module {
+  @override
+  void binds(Injector i) {
+    i
+      ..addLazySingleton<SignupDriver>(
+          (i) => SignupDriverImpl(localStorage: i()))
+      ..addLazySingleton<SignupRepository>(
+          (i) => SignupRepositoryImpl(signupDriver: i()))
+      ..addLazySingleton<SignupUsecase>(
+          (i) => SignupUsecaseImpl(signupRepository: i()))
+      ..addLazySingleton((i) => SignupController(signupUsecase: i()));
+  }
 
-   @override
-   final List<Bind> binds = [
-     Bind.lazySingleton<SignupDriver>((i) => SignupDriverImpl(localStorage: i())),
-     Bind.lazySingleton<SignupRepository>((i) => SignupRepositoryImpl(signupDriver: i())),
-     Bind.lazySingleton<SignupUsecase>((i) => SignupUsecaseImpl(signupRepository: i())),
-     Bind.lazySingleton((i) => SignupController(signupUsecase: i())),
-   ];
-
-   @override
-   final List<ModularRoute> routes = [
-     ChildRoute(Modular.initialRoute, child: (_, args) => SignupPage(signupController: Modular.get(),)),
-   ];
-
+  @override
+  void routes(RouteManager r) {
+    r.child(
+      Modular.initialRoute,
+      child: (_) => SignupPage(
+        signupController: Modular.get(),
+      ),
+    );
+  }
 }
