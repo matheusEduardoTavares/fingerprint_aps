@@ -27,7 +27,7 @@ class LoadingDependenciesController extends Cubit<LoadingDependenciesState> {
     if (shouldUpdateApp) {
       _codePush.updateToNewVersion();
       Future.delayed(
-        Duration(seconds: 5),
+        Duration(seconds: 6),
         () {
           _codePush.showRestartAppAfterUpdateBottomSheet(
             NavigationService.navigatorKey.currentContext!,
