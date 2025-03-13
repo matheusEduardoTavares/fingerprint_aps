@@ -48,4 +48,6 @@ class HomePageTexts {
   static const sixthPermission = 'Donec dignissim aliquet pharetra. '
       'Donec malesuada, nulla fringilla '
       'elementum feugiat.';
+
+  static const seventhPermission = 'Sed hendrerit cursus felis.';
 }
