@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fingerprint_aps/app/core/code_push/code_push.dart';
 import 'package:fingerprint_aps/app/core/code_push/code_push_shorebird_impl.dart';
+import 'package:fingerprint_aps/app/core/navigation_service/navigation_service.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/presenter/controller/loading_dependencies_enum.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/presenter/controller/loading_dependencies_state.dart';
 import 'package:fingerprint_aps/app/modules/loading_dependencies/presenter/usecases/loading_dependencies_usecase.dart';
@@ -24,7 +25,15 @@ class LoadingDependenciesController extends Cubit<LoadingDependenciesState> {
 
     final shouldUpdateApp = await _codePush.valideNeedsUpdate();
     if (shouldUpdateApp) {
-      await _codePush.updateToNewVersion();
+      _codePush.updateToNewVersion();
+      Future.delayed(
+        Duration(seconds: 5),
+        () {
+          _codePush.showRestartAppAfterUpdateBottomSheet(
+            NavigationService.navigatorKey.currentContext!,
+          );
+        },
+      );
     }
 
     await Future.delayed(const Duration(seconds: 3));
