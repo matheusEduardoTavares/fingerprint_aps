@@ -23,6 +23,8 @@ class PermissionsUserEnumAdapter extends TypeAdapter<PermissionsUserEnum> {
         return PermissionsUserEnum.four;
       case 4:
         return PermissionsUserEnum.fifth;
+      case 5:
+        return PermissionsUserEnum.sixth;
       default:
         return PermissionsUserEnum.one;
     }
@@ -45,6 +47,9 @@ class PermissionsUserEnumAdapter extends TypeAdapter<PermissionsUserEnum> {
         break;
       case PermissionsUserEnum.fifth:
         writer.writeByte(4);
+        break;
+      case PermissionsUserEnum.sixth:
+        writer.writeByte(5);
         break;
     }
   }

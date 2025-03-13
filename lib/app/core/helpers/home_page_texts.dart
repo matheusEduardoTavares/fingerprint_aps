@@ -39,9 +39,13 @@ class HomePageTexts {
       'Curabitur lacinia augue sed venenatis fringilla. '
       'Donec quis velit ac orci sodales vehicula quis porta elit. '
       'Etiam posuere leo velit, sit amet venenatis ex maximus sit amet. '
-      'Donec mattis posuere odio vel commodo';
+      'Donec mattis posuere odio vel commodo.';
 
   static const fifthPermission = 'Mauris ac imperdiet sapien. '
       'Phasellus ut egestas libero. '
-      'Suspendisse non elit at massa fermentum finibus consequat eu dui';
+      'Suspendisse non elit at massa fermentum finibus consequat eu dui.';
+
+  static const sixthPermission = 'Donec dignissim aliquet pharetra. '
+      'Donec malesuada, nulla fringilla '
+      'elementum feugiat.';
 }

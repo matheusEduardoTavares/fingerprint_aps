@@ -16,6 +16,8 @@ enum PermissionsUserEnum {
   four,
   @HiveField(4)
   fifth,
+  @HiveField(5)
+  sixth,
 }
 
 extension PermissionsUserEnumExt on PermissionsUserEnum {
@@ -29,6 +31,7 @@ extension PermissionsUserEnumExt on PermissionsUserEnum {
     PermissionsUserEnum.three: 'Permissão três',
     PermissionsUserEnum.four: 'Permissão quatro',
     PermissionsUserEnum.fifth: 'Permissão cinco',
+    PermissionsUserEnum.sixth: 'Permissão seis',
   };
 
   static const displayTextsMap = {
@@ -37,6 +40,7 @@ extension PermissionsUserEnumExt on PermissionsUserEnum {
     PermissionsUserEnum.three: HomePageTexts.thirdPermission,
     PermissionsUserEnum.four: HomePageTexts.fourthPermission,
     PermissionsUserEnum.fifth: HomePageTexts.fifthPermission,
+    PermissionsUserEnum.sixth: HomePageTexts.sixthPermission,
   };
 
   String get displayValue => displayValuesMap[this]!;
