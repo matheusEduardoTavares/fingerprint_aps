@@ -6,8 +6,8 @@ class CodePushShorebirdImpl implements CodePush {
   static final _updater = ShorebirdUpdater();
 
   @override
-  Future<void> updateToNewVersion() async {
-    await _updater.update();
+  void updateToNewVersion() {
+    _updater.update();
   }
 
   @override
