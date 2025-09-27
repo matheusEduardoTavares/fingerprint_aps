@@ -50,3 +50,6 @@ app.*.map.json
 
 # Android
 android/app/.cxx/*
+
+# Output
+**/output_apk/

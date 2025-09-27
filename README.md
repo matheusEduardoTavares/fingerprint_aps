@@ -297,6 +297,40 @@ Para você poder instalar e executar esta aplicação, será preciso ter instala
 <br />
 Só com isso já é possível buildar o APP.
 
+## Anotações sobre política de 16 KB
+
+Gerar o APK para release normal. 
+Pode ser o appbundle também. 
+Extrair o conteudo: 
+unzip -d output_apk build/app/outputs/flutter-apk/app-release.apk 
+ou 
+unzip -d output_aab build/app/outputs/bundle/release/app-release.aab 
+
+Instalar o llvm 
+sudo apt update && sudo apt install llvm -y 
+
+Entrar na pasta extraída
+cd output_apk 
+
+Executar o comando: 
+find . -name "*.so" | xargs -I{} sh -c 'echo "\n{}"; llvm-objdump -p "{}" | grep "LOAD"' 
+Validar o retorno do comando anterior. 
+Se em qualquer linha aparecer 
+```
+Align 2**12
+```
+
+está errado, precisa atualizar o Flutter, AGP, NDK e ou dependências
+
+Se aparecer tudo: 
+
+```
+Align 2**14 
+Align 2**16 
+```
+
+Significa que ja esta atendendo a política. OBS: o NDK tem que estar no minimo 28 e o AGP 8.5.1 ou superior
+
 <h5 align="center">
   &copy;2022 - <a href="https://github.com/matheusEduardoTavares">Matheus Eduardo Tavares</a>
 </h5>
