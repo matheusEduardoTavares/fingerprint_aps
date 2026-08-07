@@ -52,4 +52,6 @@ class HomePageTexts {
   static const seventhPermission = 'Sed hendrerit cursus felis.';
 
   static const eighthPermission = 'Vitae fringilla diam ultrices.';
+
+  static const ninthPermission = 'Aliquam erat volutpat.';
 }
