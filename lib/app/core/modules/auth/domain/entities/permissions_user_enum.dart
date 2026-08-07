@@ -4,14 +4,26 @@ import 'package:hive/hive.dart';
 
 part 'permissions_user_enum.g.dart';
 
-@HiveType(typeId : HiveHelper.permissionsUserEnumAdapterID)
+@HiveType(typeId: HiveHelper.permissionsUserEnumAdapterID)
 enum PermissionsUserEnum {
   @HiveField(0)
   one,
   @HiveField(1)
   two,
   @HiveField(2)
-  three
+  three,
+  @HiveField(3)
+  four,
+  @HiveField(4)
+  fifth,
+  @HiveField(5)
+  sixth,
+  @HiveField(6)
+  seventh,
+  @HiveField(7)
+  eighth,
+  @HiveField(8)
+  ninth,
 }
 
 extension PermissionsUserEnumExt on PermissionsUserEnum {
@@ -23,12 +35,24 @@ extension PermissionsUserEnumExt on PermissionsUserEnum {
     PermissionsUserEnum.one: 'Permissão um',
     PermissionsUserEnum.two: 'Permissão dois',
     PermissionsUserEnum.three: 'Permissão três',
+    PermissionsUserEnum.four: 'Permissão quatro',
+    PermissionsUserEnum.fifth: 'Permissão cinco',
+    PermissionsUserEnum.sixth: 'Permissão seis',
+    PermissionsUserEnum.seventh: 'Permissão sete',
+    PermissionsUserEnum.eighth: 'Permissão oito',
+    PermissionsUserEnum.ninth: 'Permissão nove',
   };
 
   static const displayTextsMap = {
     PermissionsUserEnum.one: HomePageTexts.firstPermission,
     PermissionsUserEnum.two: HomePageTexts.secondPermission,
     PermissionsUserEnum.three: HomePageTexts.thirdPermission,
+    PermissionsUserEnum.four: HomePageTexts.fourthPermission,
+    PermissionsUserEnum.fifth: HomePageTexts.fifthPermission,
+    PermissionsUserEnum.sixth: HomePageTexts.sixthPermission,
+    PermissionsUserEnum.seventh: HomePageTexts.seventhPermission,
+    PermissionsUserEnum.eighth: HomePageTexts.eighthPermission,
+    PermissionsUserEnum.ninth: HomePageTexts.ninthPermission,
   };
 
   String get displayValue => displayValuesMap[this]!;

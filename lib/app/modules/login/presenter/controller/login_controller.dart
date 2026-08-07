@@ -9,22 +9,24 @@ import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_manua
 import 'package:fingerprint_aps/app/modules/login/presenter/usecases/login_update_user_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:asuka/asuka.dart' as asuka;
+import 'package:asuka/asuka.dart';
 
 class LoginController {
   LoginController({
-    required LoginFingerprintAuthenticateUsecase loginFingerprintAuthenticateUsecase,
+    required LoginFingerprintAuthenticateUsecase
+        loginFingerprintAuthenticateUsecase,
     required AuthController authController,
     required LoginManuallyUsecase loginManuallyUsecase,
     required LoginUpdateUserUsecase loginUpdateUserUsecase,
-  }) : 
-  _authController = authController,
-  _loginManuallyUsecase = loginManuallyUsecase,
-  _loginUpdateUserUsecase = loginUpdateUserUsecase,
-  _loginFingerprintAuthenticateUsecase = loginFingerprintAuthenticateUsecase;
+  })  : _authController = authController,
+        _loginManuallyUsecase = loginManuallyUsecase,
+        _loginUpdateUserUsecase = loginUpdateUserUsecase,
+        _loginFingerprintAuthenticateUsecase =
+            loginFingerprintAuthenticateUsecase;
 
   final AuthController _authController;
-  final LoginFingerprintAuthenticateUsecase _loginFingerprintAuthenticateUsecase;
+  final LoginFingerprintAuthenticateUsecase
+      _loginFingerprintAuthenticateUsecase;
   final LoginManuallyUsecase _loginManuallyUsecase;
   final LoginUpdateUserUsecase _loginUpdateUserUsecase;
 
@@ -45,7 +47,8 @@ class LoginController {
   }
 
   Future<void> authenticate() async {
-    final didAuthenticate = await _loginFingerprintAuthenticateUsecase.authenticate();
+    final didAuthenticate =
+        await _loginFingerprintAuthenticateUsecase.authenticate();
 
     if (didAuthenticate != null && didAuthenticate) {
       await _makeLogin();
@@ -56,7 +59,7 @@ class LoginController {
     required UserViewModel userViewModel,
   }) async {
     FocusScope.of(userViewModel.context!).unfocus();
-    
+
     if (userViewModel.formKey!.currentState!.validate()) {
       if (!Environments.isTest) {
         LoaderEntry.show();
@@ -66,14 +69,12 @@ class LoginController {
 
       if (canMakeLogin != null && canMakeLogin) {
         await _makeLogin();
-      }
-      else {
-        asuka.removeCurrentSnackBar();
-        asuka.showSnackBar(
-          const SnackBar(
+      } else {
+        Asuka
+          ..removeCurrentSnackBar()
+          ..showSnackBar(const SnackBar(
             content: Text('Login ou Senha inválidos'),
-          )
-        );
+          ));
       }
 
       if (!Environments.isTest) {
@@ -84,10 +85,8 @@ class LoginController {
     }
 
     ScaffoldMessenger.of(userViewModel.context!).removeCurrentSnackBar();
-    ScaffoldMessenger.of(userViewModel.context!).showSnackBar(
-      const SnackBar(
-        content: Text('Arrume os campos em vermelho'),
-      )
-    );
+    ScaffoldMessenger.of(userViewModel.context!).showSnackBar(const SnackBar(
+      content: Text('Arrume os campos em vermelho'),
+    ));
   }
 }

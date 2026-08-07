@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 typedef UpdateDropdownValue = void Function(PermissionsUserEnum);
 
 class UserInfoForm extends StatelessWidget {
-  const UserInfoForm({ 
-    required this.formKey,
-    required this.loginController,
-    required this.passwordController,
-    this.updateDropdownValue,
-    this.permissionsUserEnum,
-    Key? key 
-  }) : super(key: key);
+  const UserInfoForm(
+      {required this.formKey,
+      required this.loginController,
+      required this.passwordController,
+      this.updateDropdownValue,
+      this.permissionsUserEnum,
+      Key? key})
+      : super(key: key);
 
   final GlobalKey<FormState> formKey;
   final TextEditingController loginController;
@@ -28,7 +28,7 @@ class UserInfoForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0), 
+            padding: const EdgeInsets.only(bottom: 10.0),
             child: DefaultFormField(
               labelText: 'Login',
               textEditingController: loginController,
@@ -51,14 +51,15 @@ class UserInfoForm extends StatelessWidget {
                   labelText: 'Permissões',
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) => value != null ? null : 'Escolha uma opção',
+                validator: (value) =>
+                    value != null ? null : 'Escolha uma opção',
                 onChanged: (value) => updateDropdownValue?.call(value!),
-                items: PermissionsUserEnumExt.displayEntries.map(
-                  (e) => DropdownMenuItem(
-                    child: Text(e.value),
-                    value: e.key,
-                  )
-                ).toList(),
+                items: PermissionsUserEnumExt.displayEntries
+                    .map((e) => DropdownMenuItem(
+                          value: e.key,
+                          child: Text(e.value),
+                        ))
+                    .toList(),
               ),
             ),
         ],

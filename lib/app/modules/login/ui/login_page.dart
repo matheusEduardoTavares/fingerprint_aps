@@ -5,12 +5,11 @@ import 'package:fingerprint_aps/app/modules/login/presenter/controller/login_con
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({ 
+  const LoginPage({
     required LoginController loginController,
     Key? key,
-  }) : 
-  _loginController = loginController,
-  super(key: key);
+  })  : _loginController = loginController,
+        super(key: key);
 
   final LoginController _loginController;
 
@@ -23,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _loginController;
   late TextEditingController _passwordController;
 
-  @override 
+  @override
   void initState() {
     super.initState();
 
@@ -55,16 +54,15 @@ class _LoginPageState extends State<LoginPage> {
                     passwordController: _passwordController,
                   ),
                   ElevatedButton(
-                    onPressed: () => widget._loginController.manuallyLogin(
-                      userViewModel: UserViewModel(
-                        context: context,
-                        formKey: _formKey,
-                        login: _loginController.text,
-                        password: _passwordController.text,  
-                      ),
-                    ), 
-                    child: const Text('Fazer Login')
-                  ),
+                      onPressed: () => widget._loginController.manuallyLogin(
+                            userViewModel: UserViewModel(
+                              context: context,
+                              formKey: _formKey,
+                              login: _loginController.text,
+                              password: _passwordController.text,
+                            ),
+                          ),
+                      child: const Text('Fazer Login')),
                 ],
               ),
             ],
@@ -72,13 +70,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.fingerprint),
         onPressed: widget._loginController.authenticate,
+        child: const Icon(Icons.fingerprint),
       ),
     );
   }
 
-  @override 
+  @override
   void dispose() {
     _loginController.dispose();
     _passwordController.dispose();

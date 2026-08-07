@@ -32,7 +32,7 @@ como facilitador tem-se a adição de um “CLI” próprio para facilitar o uso
 de acesso ao “Flutter” via terminal (ou seja, foi-se adicionado na variável “PATH” do
 computador o caminho onde o binário do Flutter estava para que dessa forma, via
 linha de comando, fosse possível a execução de comandos “Flutter”).
-A versão do “Flutter” usado no mesmo foi a versão “2.2.3” e que depois fora atualizado, estando agora com a versão "2.10.1", e ambas versões já faziam o uso do “NullSafety”, que foi uma nova funcionalidade trazida no “Flutter”, relativamente recente, na qual teve uma melhora muito grande com relação a inteligência do compilador, obrigando, assim, seus desenvolvedores a tratarem o nulo de forma correta, evitando ocasionais “bugs” que o mesmo gerava com frequência relativamente grande, uma vez que um tratamento errado com este tipo de dado pode muito facilmente quebrar a aplicação, gerando uma tela vermelha para o usuário final. Com o objetivo de trazer uma experiência bem próxima de produtos que estão, também fora adicionado o conhecido CI / CD no projeto, a fim de automatizar alguns processos e melhorar a qualidade do produto final, por meio dessas automações. Basicamente, é um método que visa entregar aplicações com frequência aos clientes. Com relação a suas aplicações neste projeto, com o “CI” é feito a integração contínua, validando algumas questões, como se todos os testes unitários estão funcionando de fato, se não houve nenhum conflito entre ramificações, se a aplicação está “buildando” em erros e entre outros.
+A versão do “Flutter” usado no mesmo foi a versão “2.2.3” e que depois fora atualizado, estando agora com a versão "2.10.2", e ambas versões já faziam o uso do “NullSafety”, que foi uma nova funcionalidade trazida no “Flutter”, relativamente recente, na qual teve uma melhora muito grande com relação a inteligência do compilador, obrigando, assim, seus desenvolvedores a tratarem o nulo de forma correta, evitando ocasionais “bugs” que o mesmo gerava com frequência relativamente grande, uma vez que um tratamento errado com este tipo de dado pode muito facilmente quebrar a aplicação, gerando uma tela vermelha para o usuário final. Com o objetivo de trazer uma experiência bem próxima de produtos que estão, também fora adicionado o conhecido CI / CD no projeto, a fim de automatizar alguns processos e melhorar a qualidade do produto final, por meio dessas automações. Basicamente, é um método que visa entregar aplicações com frequência aos clientes. Com relação a suas aplicações neste projeto, com o “CI” é feito a integração contínua, validando algumas questões, como se todos os testes unitários estão funcionando de fato, se não houve nenhum conflito entre ramificações, se a aplicação está “buildando” em erros e entre outros.
 Com o “CD”, é possível de maneira muito fácil gerar os “.apk” para o Android, bastando apenas atualizar a versão do projeto por meio das tags do git, de forma que ao criar uma nova “release” (uma nova tag do git ao projeto), o mesmo faz todas as validações necessárias e após isso gera o aplicativo e também seu “appbundle” (é o arquivo que pode ser jogado na loja referente ao aplicativo), deixando fácil de baixá-los e assim poder repassar para alguém. Ainda sobre sua aplicação com relação a este projeto em específico, o mesmo foi configurado para o “Github” (uma plataforma na nuvem que serve para hospedagem de códigos fonte, além de fornecer várias funcionalidades), de forma a explorar a ferramenta do “Github” chamada “Github Actions”, no qual está a integração com o CI / CD. Juntamente desta ideia, também foi adicionado alguns testes unitários no projeto, a fim de garantir que algumas funcionalidades de fato estivessem funcionando, além de que grandes projetos sempre devem possuir testes unitários, uma vez que uma das etapas para se ter um código de qualidade é garantir que o mesmo continua funcionando, e a melhor forma de fazer isso é por meio dos testes unitários.
 No desenvolvimento mobile, é possível criar aplicativos utilizando linguagens de programação que são específicas de cada plataforma (nativas), ou fazendo uso de frameworks híbridos, que atendem todas as plataformas. No caso deste projeto, fora utilizado o “Flutter” que é um framework híbrido. Para a utilização de alguns recursos nativos por meio deste tipo de framework, é preciso fazer uso de bibliotecas chamadas de “packages”, de forma que por debaixo dos panos tais “packages” se comunicam
 diretamente com o nativo, pois cada plataforma tem seu tratamento específico para seus recursos. Consequentemente, vê-se que é muito raro haver aplicativos “Flutter” que não façam uso de nenhum package, assim como neste projeto algumas bibliotecas foram usadas.
@@ -293,9 +293,43 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 🔧 Instalação e execução
 
-Para você poder instalar e executar esta aplicação, será preciso ter instalado o git para clonar este repositório e ter a SDK do Flutter instalada na máquina para poder executar o projeto, de preferência na mesma versão usada por mim, que é a 2.10.1. Com isso, basta executar *flutter clean*, e, depois, *flutter pub get* para baixar todas libs em suas respectivas versões do projeto.
+Para você poder instalar e executar esta aplicação, será preciso ter instalado o git para clonar este repositório e ter a SDK do Flutter instalada na máquina para poder executar o projeto, de preferência na mesma versão usada por mim, que é a 2.10.2. Com isso, basta executar *flutter clean*, e, depois, *flutter pub get* para baixar todas libs em suas respectivas versões do projeto.
 <br />
 Só com isso já é possível buildar o APP.
+
+## Anotações sobre política de 16 KB
+
+Gerar o APK para release normal. 
+Pode ser o appbundle também. 
+Extrair o conteudo: 
+unzip -d output_apk build/app/outputs/flutter-apk/app-release.apk 
+ou 
+unzip -d output_aab build/app/outputs/bundle/release/app-release.aab 
+
+Instalar o llvm 
+sudo apt update && sudo apt install llvm -y 
+
+Entrar na pasta extraída
+cd output_apk 
+
+Executar o comando: 
+find . -name "*.so" | xargs -I{} sh -c 'echo "\n{}"; llvm-objdump -p "{}" | grep "LOAD"' 
+Validar o retorno do comando anterior. 
+Se em qualquer linha aparecer 
+```
+Align 2**12
+```
+
+está errado, precisa atualizar o Flutter, AGP, NDK e ou dependências
+
+Se aparecer tudo: 
+
+```
+Align 2**14 
+Align 2**16 
+```
+
+Significa que ja esta atendendo a política. OBS: o NDK tem que estar no minimo 28 e o AGP 8.5.1 ou superior
 
 <h5 align="center">
   &copy;2022 - <a href="https://github.com/matheusEduardoTavares">Matheus Eduardo Tavares</a>
